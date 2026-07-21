@@ -4,6 +4,10 @@ export const site = {
   shortName: "Detachment 725",
   tagline: "Once a Marine, Always a Marine.",
   location: "St. Charles County, Missouri",
+  // Production URL — used for canonical links, sitemap, robots, and social
+  // share images. Set NEXT_PUBLIC_SITE_URL in the deploy environment, or
+  // update the fallback below to the detachment's real domain.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.stcharlesmarines.org").replace(/\/$/, ""),
   meeting: {
     schedule: "First Wednesday of every month, 7:00 PM (1900)",
     venue: "O'Fallon Elks Lodge",
