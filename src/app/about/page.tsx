@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Card, Container, SectionHeading } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function AboutPage() {
 
       <section className="bg-cream py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+          <Reveal className="lg:col-span-2">
             <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-navy">
               Who We Are
             </h2>
@@ -57,9 +58,9 @@ export default function AboutPage() {
               veterans, and our community through charitable work, patriotic service, and
               fellowship.
             </blockquote>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={150}>
             <Card>
               <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 Detachment Contacts
@@ -84,7 +85,7 @@ export default function AboutPage() {
                 or visit a meeting.
               </p>
             </Card>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

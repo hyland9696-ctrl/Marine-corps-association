@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Oswald, Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageFade from "@/components/PageFade";
+import BackToTop from "@/components/BackToTop";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -29,8 +31,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${oswald.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <PageFade>{children}</PageFade>
+        </main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );

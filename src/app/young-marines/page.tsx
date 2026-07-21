@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Young Marines",
@@ -39,33 +40,37 @@ export default function YoungMarinesPage() {
       <section className="bg-cream py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <p className="text-navy/80 leading-relaxed">
-              The St. Charles County Young Marines was founded by three members of Detachment 725
-              and one civilian volunteer. What began as a local effort has grown into the largest
-              Young Marines unit in Missouri and one of the top-ranked units in the Midwest
-              Regiment.
-            </p>
-            <p className="mt-4 text-navy/80 leading-relaxed">
-              The Young Marines is a national nonprofit youth education program for boys and
-              girls, promoting a physically fit, drug-free lifestyle alongside leadership and
-              good citizenship. Our unit gives young people in St. Charles County the chance to
-              build discipline, confidence, and community connection in a structured, mentor-led
-              environment.
-            </p>
+            <Reveal>
+              <p className="text-navy/80 leading-relaxed">
+                The St. Charles County Young Marines was founded by three members of Detachment
+                725 and one civilian volunteer. What began as a local effort has grown into the
+                largest Young Marines unit in Missouri and one of the top-ranked units in the
+                Midwest Regiment.
+              </p>
+              <p className="mt-4 text-navy/80 leading-relaxed">
+                The Young Marines is a national nonprofit youth education program for boys and
+                girls, promoting a physically fit, drug-free lifestyle alongside leadership and
+                good citizenship. Our unit gives young people in St. Charles County the chance to
+                build discipline, confidence, and community connection in a structured, mentor-led
+                environment.
+              </p>
+            </Reveal>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-3">
-              {pillars.map((p) => (
-                <Card key={p.title}>
-                  <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-navy/70">{p.description}</p>
-                </Card>
+              {pillars.map((p, i) => (
+                <Reveal key={p.title} delay={i * 80}>
+                  <Card>
+                    <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-navy/70">{p.description}</p>
+                  </Card>
+                </Reveal>
               ))}
             </div>
           </div>
 
-          <div>
+          <Reveal delay={150}>
             <Card>
               <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 Interested in Enrolling?
@@ -79,7 +84,7 @@ export default function YoungMarinesPage() {
                 <Button href="/contact">Contact Us</Button>
               </div>
             </Card>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

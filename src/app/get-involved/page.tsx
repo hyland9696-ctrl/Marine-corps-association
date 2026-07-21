@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -43,24 +44,28 @@ export default function GetInvolvedPage() {
               Who Can Join
             </h2>
             <div className="mt-4 grid gap-6 sm:grid-cols-2">
-              <Card>
-                <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
-                  Regular Membership
-                </h3>
-                <p className="mt-2 text-sm text-navy/70">
-                  Open to Marines and FMF Corpsmen (Navy corpsmen who served with the Marine
-                  Corps) who received an honorable discharge, or who are currently serving.
-                </p>
-              </Card>
-              <Card>
-                <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
-                  Associate Membership
-                </h3>
-                <p className="mt-2 text-sm text-navy/70">
-                  Open to family members and community supporters who want to help the detachment
-                  carry out its mission, without prior Marine Corps service.
-                </p>
-              </Card>
+              <Reveal>
+                <Card>
+                  <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
+                    Regular Membership
+                  </h3>
+                  <p className="mt-2 text-sm text-navy/70">
+                    Open to Marines and FMF Corpsmen (Navy corpsmen who served with the Marine
+                    Corps) who received an honorable discharge, or who are currently serving.
+                  </p>
+                </Card>
+              </Reveal>
+              <Reveal delay={80}>
+                <Card>
+                  <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
+                    Associate Membership
+                  </h3>
+                  <p className="mt-2 text-sm text-navy/70">
+                    Open to family members and community supporters who want to help the
+                    detachment carry out its mission, without prior Marine Corps service.
+                  </p>
+                </Card>
+              </Reveal>
             </div>
 
             <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
@@ -68,29 +73,33 @@ export default function GetInvolvedPage() {
             </h2>
             <div className="mt-4 space-y-4">
               {steps.map((s, i) => (
-                <Card key={s.title} className="flex gap-4">
-                  <span className="font-display text-2xl font-bold text-scarlet">{i + 1}</span>
-                  <div>
-                    <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
-                      {s.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-navy/70">{s.description}</p>
-                  </div>
-                </Card>
+                <Reveal key={s.title} delay={i * 80}>
+                  <Card className="flex gap-4">
+                    <span className="font-display text-2xl font-bold text-scarlet">{i + 1}</span>
+                    <div>
+                      <h3 className="font-display text-base font-semibold uppercase tracking-wide text-navy">
+                        {s.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-navy/70">{s.description}</p>
+                    </div>
+                  </Card>
+                </Reveal>
               ))}
             </div>
 
-            <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
-              Dues
-            </h2>
-            <p className="mt-4 text-navy/80 leading-relaxed">
-              Dues can be paid in person at a meeting &mdash; cash, check, or credit card &mdash; to
-              our Paymaster, {site.contacts.paymaster.name}. Contact us for current dues amounts
-              and online payment options.
-            </p>
+            <Reveal>
+              <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+                Dues
+              </h2>
+              <p className="mt-4 text-navy/80 leading-relaxed">
+                Dues can be paid in person at a meeting &mdash; cash, check, or credit card
+                &mdash; to our Paymaster, {site.contacts.paymaster.name}. Contact us for current
+                dues amounts and online payment options.
+              </p>
+            </Reveal>
           </div>
 
-          <div>
+          <Reveal delay={150}>
             <Card>
               <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 Ready to Join Us?
@@ -102,7 +111,7 @@ export default function GetInvolvedPage() {
                 <Button href="/contact">Contact Us</Button>
               </div>
             </Card>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

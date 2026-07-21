@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Card, Container, SectionHeading } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -52,17 +53,19 @@ export default function SupportPage() {
       <section className="bg-cream py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            {ways.map((w) => (
-              <Card key={w.title}>
-                <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
-                  {w.title}
-                </h3>
-                <p className="mt-2 text-sm text-navy/70">{w.description}</p>
-              </Card>
+            {ways.map((w, i) => (
+              <Reveal key={w.title} delay={i * 70}>
+                <Card>
+                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                    {w.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-navy/70">{w.description}</p>
+                </Card>
+              </Reveal>
             ))}
           </div>
 
-          <div>
+          <Reveal delay={150}>
             <Card>
               <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 Ways to Give
@@ -90,7 +93,7 @@ export default function SupportPage() {
                 .
               </p>
             </Card>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

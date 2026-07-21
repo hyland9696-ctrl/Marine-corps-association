@@ -1,4 +1,5 @@
 import { Button, Card, Container, Eyebrow, SectionHeading } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 import { programs, site } from "@/lib/site";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ export default function HomePage() {
     <>
       <section className="relative overflow-hidden bg-navy text-cream">
         <div
-          className="pointer-events-none absolute inset-0 opacity-10"
+          className="animate-drift pointer-events-none absolute inset-0 opacity-10"
           style={{
             backgroundImage:
               "repeating-linear-gradient(135deg, var(--color-gold) 0px, var(--color-gold) 1px, transparent 1px, transparent 40px)",
@@ -40,7 +41,7 @@ export default function HomePage() {
 
       <section className="bg-cream py-16 sm:py-24">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <Eyebrow>Our Mission</Eyebrow>
             <p className="mt-4 font-display text-2xl leading-snug text-navy sm:text-3xl">
               &ldquo;To promote the interests and preserve the traditions of the United States
@@ -51,25 +52,29 @@ export default function HomePage() {
               We&rsquo;re committed to serving Marines, FMF Corpsmen, veterans, and our community
               through charitable work, patriotic service, and fellowship.
             </p>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       <section className="bg-white py-16 sm:py-24">
         <Container>
-          <SectionHeading
-            eyebrow="What We Do"
-            title="Serving Marines &amp; Our Community"
-            description="From honoring our fallen to raising up the next generation, here's how Detachment 725 keeps the Corps' traditions alive."
-          />
+          <Reveal>
+            <SectionHeading
+              eyebrow="What We Do"
+              title="Serving Marines &amp; Our Community"
+              description="From honoring our fallen to raising up the next generation, here's how Detachment 725 keeps the Corps' traditions alive."
+            />
+          </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {programs.map((p) => (
-              <Card key={p.title}>
-                <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-navy/70">{p.description}</p>
-              </Card>
+            {programs.map((p, i) => (
+              <Reveal key={p.title} delay={i * 80}>
+                <Card>
+                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-navy/70">{p.description}</p>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -77,7 +82,7 @@ export default function HomePage() {
 
       <section className="bg-navy-light py-14 text-cream">
         <Container className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <div>
+          <Reveal>
             <p className="font-display text-sm font-semibold tracking-[0.2em] text-gold uppercase">
               Next Meeting
             </p>
@@ -87,37 +92,41 @@ export default function HomePage() {
             <p className="mt-1 text-cream/80">
               {site.meeting.venue}, {site.meeting.address}
             </p>
-          </div>
-          <Button href="/events" variant="gold">
-            Full Meeting Details
-          </Button>
+          </Reveal>
+          <Reveal delay={120}>
+            <Button href="/events" variant="gold">
+              Full Meeting Details
+            </Button>
+          </Reveal>
         </Container>
       </section>
 
       <section className="bg-scarlet py-16 text-cream sm:py-20">
         <Container className="flex flex-col items-center gap-6 text-center">
-          <h2 className="font-display text-3xl font-bold tracking-wide uppercase sm:text-4xl">
-            Ready to Stand With Us?
-          </h2>
-          <p className="max-w-xl text-cream/90">
-            Whether you&rsquo;re a Marine, an FMF Corpsman, or a community member who wants to
-            support our mission &mdash; there&rsquo;s a place for you at Detachment 725.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/get-involved" variant="gold">
-              Become a Member
-            </Button>
-            <Button href="/support" variant="outline">
-              Support Us
-            </Button>
-          </div>
-          <p className="text-sm text-cream/70">
-            Questions?{" "}
-            <Link href="/contact" className="underline hover:text-gold-light">
-              Get in touch
-            </Link>
-            .
-          </p>
+          <Reveal className="flex flex-col items-center gap-6">
+            <h2 className="font-display text-3xl font-bold tracking-wide uppercase sm:text-4xl">
+              Ready to Stand With Us?
+            </h2>
+            <p className="max-w-xl text-cream/90">
+              Whether you&rsquo;re a Marine, an FMF Corpsman, or a community member who wants to
+              support our mission &mdash; there&rsquo;s a place for you at Detachment 725.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button href="/get-involved" variant="gold">
+                Become a Member
+              </Button>
+              <Button href="/support" variant="outline">
+                Support Us
+              </Button>
+            </div>
+            <p className="text-sm text-cream/70">
+              Questions?{" "}
+              <Link href="/contact" className="underline hover:text-gold-light">
+                Get in touch
+              </Link>
+              .
+            </p>
+          </Reveal>
         </Container>
       </section>
     </>
