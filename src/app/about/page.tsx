@@ -29,7 +29,7 @@ export default function AboutPage() {
               Who We Are
             </h2>
             <p className="mt-4 text-navy/80 leading-relaxed">
-              {site.name} is a local chapter, or &ldquo;detachment,&rdquo; of the {site.org} &mdash;
+              {site.name} is a local chapter, or &ldquo;detachment,&rdquo; of the {site.org},
               a national veterans organization chartered by an Act of Congress in 1937. We bring
               that national mission home to {site.location}, giving Marines, FMF Corpsmen, and
               their families a place to stay connected to the Corps and to each other long after
@@ -39,7 +39,7 @@ export default function AboutPage() {
               Our detachment is built on fellowship and service. We gather monthly, support one
               another, and put &ldquo;Semper Fidelis&rdquo; into action through community programs
               like Toys for Tots, funeral honors for departed veterans, scholarships for
-              Marine-connected students, and the St. Charles County Young Marines &mdash; a youth
+              Marine-connected students, and the St. Charles County Young Marines, a youth
               program our members founded that has grown into the largest unit in Missouri.
             </p>
             <p className="mt-4 text-navy/80 leading-relaxed">
@@ -54,7 +54,7 @@ export default function AboutPage() {
             <blockquote className="mt-4 border-l-4 border-scarlet pl-6 text-navy/80 italic leading-relaxed">
               To promote the interests and preserve the traditions of the United States Marine
               Corps, to strengthen the fraternity of Marines and their families, and to foster
-              love of country and fidelity to the Corps &mdash; serving Marines, FMF Corpsmen,
+              love of country and fidelity to the Corps, serving Marines, FMF Corpsmen,
               veterans, and our community through charitable work, patriotic service, and
               fellowship.
             </blockquote>

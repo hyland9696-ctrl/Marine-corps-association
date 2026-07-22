@@ -20,7 +20,7 @@ const inter = Inter({
 
 const title = "St. Charles County Detachment 725 | Marine Corps League";
 const description =
-  "St. Charles County Detachment 725 of the Marine Corps League — serving Marines, FMF Corpsmen, veterans, and the St. Charles County, Missouri community through fellowship, charitable work, and patriotic service.";
+  "St. Charles County Detachment 725 of the Marine Corps League, serving Marines, FMF Corpsmen, veterans, and the St. Charles County, Missouri community through fellowship, charitable work, and patriotic service.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Detachment 725 Marine Corps League",
   },
   description,
-  applicationName: `${site.name} — ${site.org}`,
+  applicationName: `${site.name}, ${site.org}`,
   keywords: [
     "Marine Corps League",
     "Detachment 725",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: site.url,
-    siteName: `${site.name} — ${site.org}`,
+    siteName: `${site.name}, ${site.org}`,
     title,
     description,
   },

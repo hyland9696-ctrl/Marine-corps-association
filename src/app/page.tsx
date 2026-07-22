@@ -22,11 +22,11 @@ export default function HomePage() {
             {site.name}
           </h1>
           <p className="mt-2 font-display text-xl text-gold-light sm:text-2xl">
-            {site.org} &mdash; {site.location}
+            {site.org}, {site.location}
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80 sm:text-lg">
             Marines never stop serving. We&rsquo;re a home for Marines, FMF Corpsmen, and their
-            families in St. Charles County &mdash; carrying the Corps&rsquo; traditions into our
+            families in St. Charles County, carrying the Corps&rsquo; traditions into our
             community through fellowship, charity, and service to fellow veterans.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
@@ -109,7 +109,7 @@ export default function HomePage() {
             </h2>
             <p className="max-w-xl text-cream/90">
               Whether you&rsquo;re a Marine, an FMF Corpsman, or a community member who wants to
-              support our mission &mdash; there&rsquo;s a place for you at Detachment 725.
+              support our mission. There&rsquo;s a place for you at Detachment 725.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button href="/get-involved" variant="gold">

@@ -92,8 +92,8 @@ export default function GetInvolvedPage() {
                 Dues
               </h2>
               <p className="mt-4 text-navy/80 leading-relaxed">
-                Dues can be paid in person at a meeting &mdash; cash, check, or credit card
-                &mdash; to our Paymaster, {site.contacts.paymaster.name}. Contact us for current
+                Dues can be paid in person at a meeting (cash, check, or credit card)
+                to our Paymaster, {site.contacts.paymaster.name}. Contact us for current
                 dues amounts and online payment options.
               </p>
             </Reveal>

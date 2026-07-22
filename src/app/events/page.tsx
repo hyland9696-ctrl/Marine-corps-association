@@ -58,8 +58,8 @@ export default function EventsPage() {
                 </div>
               </Card>
               <p className="mt-4 text-sm text-navy/60">
-                New to the detachment? Prospective members and guests are always welcome &mdash;
-                just come by, or reach out ahead of time on our{" "}
+                New to the detachment? Prospective members and guests are always welcome. Just
+                come by, or reach out ahead of time on our{" "}
                 <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="underline">
                   Facebook page
                 </a>
@@ -88,7 +88,7 @@ export default function EventsPage() {
               ))}
             </div>
             <p className="mt-4 text-sm text-navy/60">
-              Exact dates are announced closer to each event &mdash; follow our{" "}
+              Exact dates are announced closer to each event. Follow our{" "}
               <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="underline">
                 Facebook
               </a>{" "}
