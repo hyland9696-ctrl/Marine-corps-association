@@ -83,9 +83,18 @@ export function Button({
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Card({
+  children,
+  className = "",
+  id,
+}: {
+  children: ReactNode;
+  className?: string;
+  id?: string;
+}) {
   return (
     <div
+      id={id}
       className={`group relative overflow-hidden rounded-sm border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-scarlet/20 hover:shadow-xl ${className}`}
     >
       <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-scarlet via-gold to-scarlet transition-transform duration-500 ease-out group-hover:scale-x-100" />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ContactForm from "@/components/ContactForm";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -19,6 +20,23 @@ export default function ContactPage() {
 
       <section className="bg-cream py-16 sm:py-24">
         <Container className="grid gap-8 md:grid-cols-2">
+          <Reveal className="md:col-span-2">
+            <Card id="message">
+              <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                Send Us a Message
+              </h3>
+              <p className="mt-2 mb-6 text-navy/70">
+                Questions about membership, events, or getting involved? Send us a note and
+                we&rsquo;ll be in touch.
+              </p>
+              <ContactForm
+                endpoint={site.formEndpoint}
+                email={site.contacts.editor.email}
+                phone={site.phone}
+              />
+            </Card>
+          </Reveal>
+
           <Reveal>
             <Card>
               <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">

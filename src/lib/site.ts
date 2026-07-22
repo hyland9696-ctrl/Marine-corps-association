@@ -33,6 +33,12 @@ export const site = {
       note: "Newsletter submissions and material contributions",
     },
   },
+  // Contact form delivery. The site is statically hosted (no server), so form
+  // submissions are handled by Formspree (https://formspree.io) — free for low
+  // volume. Create a form there, then paste its endpoint below or set
+  // NEXT_PUBLIC_FORMSPREE_ENDPOINT. While this is empty the form still shows,
+  // but submitting points people to email/phone instead of failing silently.
+  formEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? "",
   social: {
     facebook: "https://www.facebook.com/StCharlesMarines/",
     youtube: "https://www.youtube.com/@stcharlescountymomarinesmc1466",
