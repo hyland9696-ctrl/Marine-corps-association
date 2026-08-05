@@ -39,6 +39,11 @@ export const site = {
   // NEXT_PUBLIC_FORMSPREE_ENDPOINT. While this is empty the form still shows,
   // but submitting points people to email/phone instead of failing silently.
   formEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? "",
+  // Online donations. Paste the detachment's giving link here (Zeffy is free
+  // for nonprofits; PayPal, Venmo, or Givebutter also work) or set
+  // NEXT_PUBLIC_DONATE_URL. While empty, the Donate buttons invite people to
+  // give by mail/phone instead of linking nowhere.
+  donateUrl: process.env.NEXT_PUBLIC_DONATE_URL ?? "",
   social: {
     facebook: "https://www.facebook.com/StCharlesMarines/",
     youtube: "https://www.youtube.com/@stcharlescountymomarinesmc1466",
@@ -48,6 +53,7 @@ export const site = {
     { href: "/about", label: "About" },
     { href: "/young-marines", label: "Young Marines" },
     { href: "/events", label: "Events" },
+    { href: "/gallery", label: "Gallery" },
     { href: "/get-involved", label: "Get Involved" },
     { href: "/support", label: "Support Us" },
     { href: "/contact", label: "Contact" },
@@ -86,3 +92,11 @@ export const programs = [
       "We support the Focus Marine Foundation's work helping combat veterans recover through fly-fishing and outdoor programs.",
   },
 ];
+
+// Photo gallery. Drop image files into `public/photos/` and list them here to
+// have them appear on the Gallery page. Example:
+//   { src: "/photos/toys-for-tots-2025.jpg", caption: "Toys for Tots, 2025" }
+// While this array is empty the Gallery page shows a friendly "coming soon"
+// state that points visitors to Facebook.
+export type Photo = { src: string; caption: string };
+export const photos: Photo[] = [];

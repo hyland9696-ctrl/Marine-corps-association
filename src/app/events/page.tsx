@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import AddToCalendar from "@/components/AddToCalendar";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -55,6 +56,16 @@ export default function EventsPage() {
                   <Button href={site.meeting.mapsUrl} variant="outline-dark" external>
                     Get Directions
                   </Button>
+                </div>
+                <div className="mt-6 border-t border-navy/10 pt-4">
+                  <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-scarlet">
+                    Never miss a meeting
+                  </p>
+                  <AddToCalendar
+                    title="Detachment 725 Monthly Meeting"
+                    description={`Monthly meeting of ${site.name}, ${site.org}. ${site.meeting.schedule}.`}
+                    location={`${site.meeting.venue}, ${site.meeting.address}`}
+                  />
                 </div>
               </Card>
               <p className="mt-4 text-sm text-navy/60">

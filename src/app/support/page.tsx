@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Card, Container, SectionHeading } from "@/components/ui";
+import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import { site } from "@/lib/site";
 
@@ -47,6 +47,33 @@ export default function SupportPage() {
             light
             description="Detachment 725 runs on the generosity of our members and community. Here's how you can help."
           />
+        </Container>
+      </section>
+
+      <section className="bg-navy-light py-12 text-cream">
+        <Container className="flex flex-col items-center gap-5 text-center">
+          <h2 className="font-display text-2xl font-bold uppercase tracking-wide sm:text-3xl">
+            Make a Donation
+          </h2>
+          <p className="max-w-2xl text-cream/80">
+            Your gift funds Toys for Tots, scholarships for Marine-connected students, funeral
+            honors, and the community programs that keep Detachment 725 serving.
+          </p>
+          {site.donateUrl ? (
+            <Button href={site.donateUrl} variant="gold" external>
+              Donate Now
+            </Button>
+          ) : (
+            <div className="flex flex-col items-center gap-3">
+              <Button href="/contact" variant="gold">
+                Contact Us to Give
+              </Button>
+              <p className="max-w-xl text-sm text-cream/60">
+                Online giving is coming soon. To donate today, reach out through our contact page
+                or mail a check to {site.mail.line1}, {site.mail.line2}.
+              </p>
+            </div>
+          )}
         </Container>
       </section>
 
