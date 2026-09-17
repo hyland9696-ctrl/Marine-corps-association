@@ -66,6 +66,7 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('📣 Newsletter')
     .addItem('1. Setup (run once)', 'setup')
+    .addItem('Open Photos Folder', 'openPhotosFolder')
     .addSeparator()
     .addItem('Send TEST to me', 'sendTest')
     .addItem('Send to ALL subscribers', 'sendNewsletter')
@@ -156,6 +157,11 @@ function send_(testOnly) {
     if (resp !== ui.Button.OK) return;
   }
 
+  // Embed "Recent Events" photos from the Drive folder as inline (CID) images
+  // so they display reliably in every email client.
+  var photos = buildPhotos_();
+  html = html.replace(/{{\s*PHOTOS\s*}}/g, photos.html);
+
   var quota = MailApp.getRemainingDailyQuota();
   var sent = 0, errors = 0, note = '';
 
@@ -170,6 +176,7 @@ function send_(testOnly) {
       GmailApp.sendEmail(r.email, subject, 'Please view this email in an HTML-capable client.', {
         htmlBody: body,
         name: FROM_NAME,
+        inlineImages: photos.inlineImages,
       });
       sent++;
     } catch (err) {
@@ -199,6 +206,59 @@ function getSubscribers_(ss) {
 
 function isEmail(s) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+
+// ------------------------------------------------------------------
+// Event photos: a Drive folder whose images are embedded (inline/CID)
+// into the "Recent Events" section at the bottom of the newsletter.
+// ------------------------------------------------------------------
+var PHOTOS_FOLDER = 'Scuttlebutt Photos';
+
+function getPhotosFolder_() {
+  var it = DriveApp.getFoldersByName(PHOTOS_FOLDER);
+  return it.hasNext() ? it.next() : DriveApp.createFolder(PHOTOS_FOLDER);
+}
+
+function openPhotosFolder() {
+  var f = getPhotosFolder_();
+  SpreadsheetApp.getUi().alert(
+    'Scuttlebutt Photos folder',
+    'Drop this month’s event photos into this Google Drive folder, then send the newsletter — they’ll be embedded automatically:\n\n' + f.getUrl(),
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+function buildPhotos_() {
+  var files = getPhotosFolder_().getFiles();
+  var imgs = [];
+  while (files.hasNext()) {
+    var f = files.next();
+    var mt = f.getMimeType();
+    if (mt && mt.indexOf('image/') === 0) imgs.push(f);
+  }
+  if (!imgs.length) return { html: '', inlineImages: {} };
+  imgs.sort(function (a, b) { return a.getName() < b.getName() ? -1 : 1; });
+  imgs = imgs.slice(0, 8);
+
+  var inline = {}, cells = '';
+  for (var i = 0; i < imgs.length; i += 2) {
+    var row = '';
+    for (var j = i; j < Math.min(i + 2, imgs.length); j++) {
+      var key = 'photo' + j;
+      inline[key] = imgs[j].getBlob();
+      row += '<td width="50%" style="padding:5px;vertical-align:top;"><img src="cid:' + key +
+        '" width="266" style="width:100%;max-width:266px;border-radius:4px;display:block;border:1px solid #e6e1d5;"></td>';
+    }
+    if (imgs.length - i === 1) row += '<td width="50%" style="padding:5px;">&nbsp;</td>';
+    cells += '<tr>' + row + '</tr>';
+  }
+  var html = '<tr><td style="padding:22px 28px 0;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-bottom:2px solid #c9a349;padding-bottom:6px;">' +
+    '<span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:#8a1538;">Recent Events</span>' +
+    '</td></tr></table>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">' + cells + '</table>' +
+    '</td></tr>';
+  return { html: html, inlineImages: inline };
 }
 
 function textOut(s) {

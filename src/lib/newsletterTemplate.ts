@@ -79,6 +79,31 @@ function sectionHeader(label: string): string {
     </td></tr></table>`;
 }
 
+/**
+ * "Recent Events" photo grid. Takes image srcs (data: URLs in the composer
+ * preview, or cid: refs when the Apps Script embeds them at send time) and
+ * lays them out two-up. The Apps Script mirrors this markup — keep in sync.
+ */
+export function photosSectionHtml(srcs: string[]): string {
+  if (!srcs.length) return "";
+  let cells = "";
+  for (let i = 0; i < srcs.length; i += 2) {
+    const pair = srcs.slice(i, i + 2);
+    const tds = pair
+      .map(
+        (s) =>
+          `<td width="50%" style="padding:5px;vertical-align:top;"><img src="${s}" width="266" style="width:100%;max-width:266px;border-radius:4px;display:block;border:1px solid #e6e1d5;" alt="Detachment 725 event photo"></td>`
+      )
+      .join("");
+    const filler = pair.length === 1 ? `<td width="50%" style="padding:5px;">&nbsp;</td>` : "";
+    cells += `<tr>${tds}${filler}</tr>`;
+  }
+  return `<tr><td style="padding:22px 28px 0;">
+      ${sectionHeader("Recent Events")}
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">${cells}</table>
+    </td></tr>`;
+}
+
 export function buildNewsletterHtml(c: NewsletterContent): string {
   const events = c.events
     .filter((e) => e.date.trim() || e.text.trim())
@@ -180,6 +205,9 @@ export function buildNewsletterHtml(c: NewsletterContent): string {
           <p style="margin:12px 0 10px;font-size:14px;line-height:1.6;color:${INK};">Life membership (one-time fee) by age. To upgrade, contact Paymaster Mark Hoernschemeyer (314-482-3974). Annual dues can be paid by PayPal at stcharlesmarine.org or at a meeting.</p>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>${dues}</tr></table>
         </td></tr>
+
+        <!-- Recent event photos (injected at send time from the Drive folder) -->
+        {{PHOTOS}}
 
         <!-- Links -->
         <tr><td style="padding:20px 28px 24px;">

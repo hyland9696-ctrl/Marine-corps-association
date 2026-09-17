@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   buildNewsletterHtml,
+  photosSectionHtml,
   newsletterDefaults,
   type NewsletterContent,
   type EventItem,
@@ -31,8 +32,21 @@ const inputCls =
 export default function NewsletterComposer() {
   const [subject, setSubject] = useState("The Scuttlebutt — September 2026");
   const [c, setC] = useState<NewsletterContent>(newsletterDefaults);
+  const [photos, setPhotos] = useState<string[]>([]);
   const [copiedSubject, copySubject] = useCopy();
   const [copiedHtml, copyHtml] = useCopy();
+
+  function addPhotos(files: FileList | null) {
+    if (!files) return;
+    Array.from(files)
+      .slice(0, 8)
+      .forEach((file) => {
+        if (!file.type.startsWith("image/")) return;
+        const reader = new FileReader();
+        reader.onload = () => setPhotos((prev) => [...prev, String(reader.result)]);
+        reader.readAsDataURL(file);
+      });
+  }
 
   const set = <K extends keyof NewsletterContent>(key: K, val: NewsletterContent[K]) =>
     setC((prev) => ({ ...prev, [key]: val }));
@@ -42,8 +56,12 @@ export default function NewsletterComposer() {
 
   const rawHtml = useMemo(() => buildNewsletterHtml(c), [c]);
   const previewHtml = useMemo(
-    () => rawHtml.replace(/{{\s*UNSUBSCRIBE\s*}}/g, "#").replace(/{{\s*NAME\s*}}/g, "Marine"),
-    [rawHtml]
+    () =>
+      rawHtml
+        .replace("{{PHOTOS}}", photosSectionHtml(photos))
+        .replace(/{{\s*UNSUBSCRIBE\s*}}/g, "#")
+        .replace(/{{\s*NAME\s*}}/g, "Marine"),
+    [rawHtml, photos]
   );
 
   return (
@@ -127,6 +145,44 @@ export default function NewsletterComposer() {
         <div>
           <label className={labelCls}>Good of the League (optional)</label>
           <textarea className={inputCls} rows={2} value={c.goodOfLeague} onChange={(e) => set("goodOfLeague", e.target.value)} />
+        </div>
+
+        {/* Event photos */}
+        <div>
+          <label className={labelCls}>Recent event photos</label>
+          <div className="mt-2 rounded-sm border border-dashed border-gold/40 bg-navy p-3">
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(e) => addPhotos(e.target.files)}
+              className="block w-full text-xs text-cream/70 file:mr-3 file:rounded-sm file:border-0 file:bg-gold file:px-3 file:py-1.5 file:font-display file:text-xs file:font-semibold file:uppercase file:text-navy hover:file:bg-gold-light"
+            />
+            {photos.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {photos.map((src, i) => (
+                  <div key={i} className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt="" className="h-16 w-16 rounded-sm object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
+                      className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-scarlet text-xs text-cream"
+                      aria-label="Remove photo"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="mt-2 text-xs text-cream/50">
+              These are a <strong>preview</strong> so you can see the layout. To actually send them,
+              drop the same photos into your Google Drive{" "}
+              <strong>&ldquo;Scuttlebutt Photos&rdquo;</strong> folder — the send engine embeds them
+              automatically. (Menu: <strong>📣 Newsletter → Open Photos Folder</strong>.)
+            </p>
+          </div>
         </div>
 
         <p className="text-xs text-cream/50">

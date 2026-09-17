@@ -43,14 +43,21 @@ There are two one-time setups, then a simple monthly routine.
 
 1. Open the site's **Marketing HQ → Newsletter Composer**. Fill in the
    subject, intro, and a few highlights. Watch the live preview.
-2. Click **Copy subject** and **Copy email HTML**.
-3. In your Google Sheet's **Compose** tab: paste the subject into **B1** and
+2. (Optional) **Add event photos:** drop this month's pictures into your Google
+   Drive **"Scuttlebutt Photos"** folder — the send engine embeds them in a
+   "Recent Events" grid at the bottom of the newsletter automatically. (Menu:
+   **📣 Newsletter → Open Photos Folder** for the link.) You can also drop them
+   into the composer's photo box to preview the layout first.
+3. Click **Copy subject** and **Copy email HTML**.
+4. In your Google Sheet's **Compose** tab: paste the subject into **B1** and
    the HTML into **B2**.
-4. Use the **📣 Newsletter** menu → **Send TEST to me** first. Check your inbox.
-5. Happy? **📣 Newsletter → Send to ALL subscribers.** Confirm the count.
+5. Use the **📣 Newsletter** menu → **Send TEST to me** first. Check your inbox.
+6. Happy? **📣 Newsletter → Send to ALL subscribers.** Confirm the count.
 
 Every email automatically includes a working **unsubscribe** link, and each
-send is recorded on the **Sent Log** tab.
+send is recorded on the **Sent Log** tab. Photos are embedded directly in the
+email (not linked), so they display even when a recipient's app blocks external
+images.
 
 ---
 
