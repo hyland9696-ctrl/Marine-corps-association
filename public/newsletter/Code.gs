@@ -247,16 +247,17 @@ function buildPhotos_() {
       var key = 'photo' + j;
       inline[key] = imgs[j].getBlob();
       row += '<td width="50%" style="padding:5px;vertical-align:top;"><img src="cid:' + key +
-        '" width="266" style="width:100%;max-width:266px;border-radius:4px;display:block;border:1px solid #e6e1d5;"></td>';
+        '" width="262" style="width:100%;max-width:262px;border-radius:4px;display:block;border:3px solid #ffffff;outline:1px solid #c9a349;"></td>';
     }
     if (imgs.length - i === 1) row += '<td width="50%" style="padding:5px;">&nbsp;</td>';
     cells += '<tr>' + row + '</tr>';
   }
   var html = '<tr><td style="padding:22px 28px 0;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-bottom:2px solid #c9a349;padding-bottom:6px;">' +
-    '<span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:#8a1538;">Recent Events</span>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-bottom:2px solid #c9a349;padding-bottom:7px;">' +
+    '<span style="color:#8a1538;font-size:11px;">&#9733;</span>' +
+    '<span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:.18em;text-transform:uppercase;color:#0a1220;padding-left:7px;">Recent Events</span>' +
     '</td></tr></table>' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">' + cells + '</table>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">' + cells + '</table>' +
     '</td></tr>';
   return { html: html, inlineImages: inline };
 }

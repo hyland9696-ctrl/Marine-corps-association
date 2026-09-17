@@ -1,12 +1,12 @@
 /**
  * "The Scuttlebutt" — Detachment 725 monthly newsletter email template.
  * Table-based + inline styles so it renders in Gmail/Outlook/Apple Mail.
- * {{NAME}} / {{UNSUBSCRIBE}} are filled per-recipient by the Apps Script
- * send engine (see /newsletter/Code.gs).
+ * {{NAME}} / {{UNSUBSCRIBE}} / {{PHOTOS}} are filled by the Apps Script send
+ * engine (see /newsletter/Code.gs).
  *
  * Modeled on the detachment's printed Scuttlebutt: editor's column, upcoming
- * events, meeting reminders, officer roster, and membership/dues — redesigned
- * to look sharp in the inbox.
+ * events, meeting reminders, officer roster, and membership/dues — with a
+ * newspaper-nameplate masthead and patriotic detailing.
  */
 
 export type EventItem = { date: string; text: string };
@@ -51,14 +51,23 @@ export const detachmentInfo = {
     ["Dept. of Missouri", "www.momcl.org"],
     ["Detachment 725", "www.stcharlesmarine.com"],
   ],
+  social: {
+    facebook: "https://www.facebook.com/StCharlesMarines/",
+    youtube: "https://www.youtube.com/@stcharlescountymomarinesmc1466",
+  },
 };
 
 const NAVY = "#0a1220";
+const NAVY2 = "#12203a";
 const GOLD = "#c9a349";
+const GOLD_LT = "#e0c37a";
 const SCARLET = "#8a1538";
 const CREAM = "#f6f3ea";
 const INK = "#1f2733";
 const MUTED = "#5b6675";
+const STRIPE = "#f6f3ec";
+const HAIR = "#e4ddcb";
+const STAR = "&#9733;";
 
 function esc(s: string): string {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -68,21 +77,31 @@ function paras(s: string, color = INK, size = 15): string {
     .split(/\n{2,}/)
     .map(
       (b) =>
-        `<p style="margin:0 0 14px;font-size:${size}px;line-height:1.65;color:${color};">${b.replace(/\n/g, "<br>")}</p>`
+        `<p style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:${size}px;line-height:1.7;color:${color};">${b.replace(/\n/g, "<br>")}</p>`
     )
     .join("");
 }
-function sectionHeader(label: string): string {
+export function sectionHeader(label: string): string {
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td style="border-bottom:2px solid ${GOLD};padding-bottom:6px;">
-      <span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:${SCARLET};">${esc(label)}</span>
+    <td style="border-bottom:2px solid ${GOLD};padding-bottom:7px;">
+      <span style="color:${SCARLET};font-size:11px;">${STAR}</span>
+      <span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:.18em;text-transform:uppercase;color:${NAVY};padding-left:7px;">${esc(label)}</span>
     </td></tr></table>`;
+}
+function starsDivider(): string {
+  return `<tr><td style="padding:20px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td style="border-bottom:1px solid ${HAIR};font-size:0;line-height:0;">&nbsp;</td>
+      <td style="padding:0 14px;white-space:nowrap;color:${GOLD};font-size:11px;letter-spacing:5px;">${STAR} ${STAR} ${STAR}</td>
+      <td style="border-bottom:1px solid ${HAIR};font-size:0;line-height:0;">&nbsp;</td>
+    </tr></table>
+  </td></tr>`;
 }
 
 /**
  * "Recent Events" photo grid. Takes image srcs (data: URLs in the composer
- * preview, or cid: refs when the Apps Script embeds them at send time) and
- * lays them out two-up. The Apps Script mirrors this markup — keep in sync.
+ * preview, or cid: refs when the Apps Script embeds them at send time), two-up
+ * with a gold frame. The Apps Script mirrors this markup — keep in sync.
  */
 export function photosSectionHtml(srcs: string[]): string {
   if (!srcs.length) return "";
@@ -92,7 +111,7 @@ export function photosSectionHtml(srcs: string[]): string {
     const tds = pair
       .map(
         (s) =>
-          `<td width="50%" style="padding:5px;vertical-align:top;"><img src="${s}" width="266" style="width:100%;max-width:266px;border-radius:4px;display:block;border:1px solid #e6e1d5;" alt="Detachment 725 event photo"></td>`
+          `<td width="50%" style="padding:5px;vertical-align:top;"><img src="${s}" width="262" style="width:100%;max-width:262px;border-radius:4px;display:block;border:3px solid #ffffff;outline:1px solid ${GOLD};" alt="Detachment 725 event photo"></td>`
       )
       .join("");
     const filler = pair.length === 1 ? `<td width="50%" style="padding:5px;">&nbsp;</td>` : "";
@@ -100,7 +119,7 @@ export function photosSectionHtml(srcs: string[]): string {
   }
   return `<tr><td style="padding:22px 28px 0;">
       ${sectionHeader("Recent Events")}
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">${cells}</table>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">${cells}</table>
     </td></tr>`;
 }
 
@@ -109,115 +128,167 @@ export function buildNewsletterHtml(c: NewsletterContent): string {
     .filter((e) => e.date.trim() || e.text.trim())
     .map(
       (e) => `<tr>
-        <td width="72" style="vertical-align:top;padding:6px 0;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:14px;color:${SCARLET};white-space:nowrap;">${esc(e.date)}</td>
-        <td style="vertical-align:top;padding:6px 0 6px 12px;font-size:15px;line-height:1.5;color:${INK};">${esc(e.text)}</td>
+        <td width="80" valign="top" style="padding:7px 0;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td bgcolor="${SCARLET}" style="background:${SCARLET};border-radius:3px;padding:4px 10px;">
+              <span style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;color:${CREAM};white-space:nowrap;">${esc(e.date)}</span>
+            </td>
+          </tr></table>
+        </td>
+        <td valign="top" style="padding:7px 0 7px 14px;font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.55;color:${INK};">${esc(e.text)}</td>
       </tr>`
     )
     .join("");
 
   const officers = detachmentInfo.officers
     .map(
-      (o) => `<tr>
-        <td style="padding:5px 0;font-size:13px;color:${MUTED};width:40%;">${esc(o.role)}</td>
-        <td style="padding:5px 0;font-size:13px;color:${INK};font-weight:bold;">${esc(o.name)}${o.contact ? `<span style="font-weight:normal;color:${MUTED};"> · ${esc(o.contact)}</span>` : ""}</td>
+      (o, i) => `<tr bgcolor="${i % 2 ? STRIPE : "#ffffff"}">
+        <td style="padding:8px 14px;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:${MUTED};">${esc(o.role)}</td>
+        <td style="padding:8px 14px;font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${NAVY};font-weight:bold;text-align:right;">${esc(o.name)}</td>
       </tr>`
     )
     .join("");
 
   const dues = detachmentInfo.duesRows
     .map(
-      ([age, fee]) =>
-        `<td style="padding:8px 4px;text-align:center;border:1px solid #e6e1d5;font-family:Arial,Helvetica,sans-serif;">
-          <div style="font-size:11px;color:${MUTED};">${esc(age)}</div>
-          <div style="font-size:15px;font-weight:bold;color:${NAVY};">${esc(fee)}</div>
+      ([age, fee], i) =>
+        `<td width="20%" style="padding:12px 4px;text-align:center;border-top:1px solid ${HAIR};${i ? `border-left:1px solid ${HAIR};` : ""}">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:${MUTED};">${esc(age)}</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:17px;font-weight:bold;color:${NAVY};margin-top:2px;">${esc(fee)}</div>
         </td>`
     )
     .join("");
 
   const links = detachmentInfo.links
     .map(([l, u]) => `${esc(l)}: <span style="color:${GOLD};">${esc(u)}</span>`)
-    .join("&nbsp;&nbsp;·&nbsp;&nbsp;");
+    .join("&nbsp;&nbsp;&middot;&nbsp;&nbsp;");
 
   const goodBlock = c.goodOfLeague.trim()
-    ? `<tr><td style="padding:20px 28px 0;">${sectionHeader("Good of the League")}<div style="padding-top:12px;">${paras(c.goodOfLeague)}</div></td></tr>`
+    ? `<tr><td style="padding:22px 28px 0;">
+        ${sectionHeader("Good of the League")}
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#faf6ea" style="background:#faf6ea;border:1px solid #ecdfbf;border-radius:4px;margin-top:12px;">
+          <tr><td style="padding:14px 18px;font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.6;color:${INK};">${esc(c.goodOfLeague).replace(/\n/g, "<br>")}</td></tr>
+        </table>
+      </td></tr>`
     : "";
 
+  const socialBtn = (href: string, label: string) =>
+    `<a href="${href}" style="display:inline-block;border:1px solid ${GOLD};border-radius:4px;padding:7px 18px;margin:0 4px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:${GOLD};text-decoration:none;">${label}</a>`;
+
   return `<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Scuttlebutt</title></head>
-<body style="margin:0;padding:0;background:${CREAM};">
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>The Scuttlebutt</title></head>
+<body style="margin:0;padding:0;background:#ece4d6;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(c.preheader)}</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${CREAM};padding:24px 0;">
-    <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;border:1px solid #e6e1d5;border-radius:6px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ece4d6" style="background:#ece4d6;padding:24px 0;">
+    <tr><td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;border:1px solid ${HAIR};border-radius:8px;overflow:hidden;">
+
+        <!-- Top patriotic ribbon -->
+        <tr><td style="padding:0;font-size:0;line-height:0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td width="50%" height="6" bgcolor="${GOLD}" style="height:6px;font-size:0;line-height:0;">&nbsp;</td>
+            <td width="50%" height="6" bgcolor="${SCARLET}" style="height:6px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr></table>
+        </td></tr>
 
         <!-- Masthead -->
-        <tr><td style="background:${NAVY};padding:26px 28px;">
+        <tr><td bgcolor="${NAVY}" style="background:${NAVY};padding:26px 28px 22px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td style="vertical-align:middle;width:64px;">
-              <div style="width:58px;height:58px;border:3px solid ${GOLD};border-radius:50%;text-align:center;line-height:54px;color:${GOLD};font-size:22px;font-weight:bold;">725</div>
+            <td width="72" valign="middle">
+              <div style="width:62px;height:62px;border:3px solid ${GOLD};border-radius:50%;text-align:center;line-height:58px;color:${GOLD};font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:bold;">725</div>
             </td>
-            <td style="vertical-align:middle;padding-left:14px;">
-              <div style="color:${CREAM};font-size:30px;font-weight:bold;letter-spacing:.06em;line-height:1;">THE SCUTTLEBUTT</div>
-              <div style="color:${GOLD};font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-top:5px;">St. Charles County Detachment 725 · Devil Dog Pound 8</div>
+            <td valign="middle" style="padding-left:16px;">
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:36px;font-weight:bold;color:${CREAM};letter-spacing:1px;line-height:1;">The Scuttlebutt</div>
+              <div style="border-top:1px solid ${GOLD};border-bottom:1px solid ${GOLD};height:3px;margin:9px 0 7px;font-size:0;line-height:0;">&nbsp;</div>
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:${GOLD_LT};">St. Charles County Detachment 725 &middot; Devil Dog Pound 8</div>
             </td>
           </tr></table>
         </td></tr>
-        <tr><td style="height:4px;background:${SCARLET};font-size:0;line-height:0;">&nbsp;</td></tr>
-        <tr><td style="background:#0e1a30;padding:8px 28px;text-align:right;">
-          <span style="color:${CREAM};opacity:.75;font-size:12px;letter-spacing:.12em;text-transform:uppercase;">${esc(c.issue)}</span>
+
+        <!-- Issue bar -->
+        <tr><td bgcolor="${NAVY2}" style="background:${NAVY2};padding:11px 20px;text-align:center;">
+          <span style="color:${GOLD};font-size:11px;letter-spacing:4px;">${STAR} ${STAR}</span>
+          <span style="display:inline-block;background:${SCARLET};color:${CREAM};font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;padding:5px 16px;border-radius:3px;margin:0 10px;">${esc(c.issue)}</span>
+          <span style="color:${GOLD};font-size:11px;letter-spacing:4px;">${STAR} ${STAR}</span>
         </td></tr>
 
         <!-- Editor's column -->
         <tr><td style="padding:26px 28px 6px;">
           ${sectionHeader(c.editorTitle || "Thoughts from the Editor")}
-          <div style="padding-top:14px;">
-            <p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:${INK};">${esc("Marines, family, and friends,")}</p>
-            ${paras(c.editorColumn, INK, 15)}
-            <p style="margin:14px 0 0;font-size:15px;font-weight:bold;color:${NAVY};">${esc(c.editorName)}</p>
+          <div style="padding-top:15px;">
+            <p style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.6;color:${INK};">Marines, family, and friends,</p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+              <td width="3" bgcolor="${GOLD}" style="width:3px;font-size:0;line-height:0;background:${GOLD};">&nbsp;</td>
+              <td style="padding-left:16px;">${paras(c.editorColumn, INK, 15)}</td>
+            </tr></table>
+            <div style="margin-top:14px;border-top:1px solid ${HAIR};padding-top:10px;">
+              <span style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:17px;font-weight:bold;color:${NAVY};">${esc(c.editorName)}</span>
+            </div>
           </div>
         </td></tr>
 
-        <!-- Upcoming Events -->
-        ${events ? `<tr><td style="padding:20px 28px 0;">${sectionHeader("Upcoming Events")}
+        ${events ? `${starsDivider()}<tr><td style="padding:20px 28px 0;">${sectionHeader("Upcoming Events")}
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">${events}</table>
         </td></tr>` : ""}
 
         <!-- Meetings -->
         <tr><td style="padding:22px 28px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${NAVY};border-radius:4px;"><tr><td style="padding:18px 22px;">
-            <div style="font-size:11px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:${GOLD};margin-bottom:8px;">Meetings</div>
-            <div style="font-size:14px;color:${CREAM};line-height:1.5;"><strong>Detachment:</strong> ${esc(detachmentInfo.detachmentMeeting)}${c.nextDetachmentMeeting ? ` <span style="color:#c9d3e0;">(next: ${esc(c.nextDetachmentMeeting)})</span>` : ""}</div>
-            <div style="font-size:14px;color:${CREAM};line-height:1.5;margin-top:6px;"><strong>Staff:</strong> ${esc(detachmentInfo.staffMeeting)}${c.nextStaffMeeting ? ` <span style="color:#c9d3e0;">(next: ${esc(c.nextStaffMeeting)})</span>` : ""}</div>
-          </td></tr></table>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${NAVY}" style="background:${NAVY};border-radius:4px;"><tr>
+            <td width="4" bgcolor="${GOLD}" style="width:4px;font-size:0;line-height:0;background:${GOLD};">&nbsp;</td>
+            <td style="padding:18px 22px;">
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;letter-spacing:.18em;text-transform:uppercase;color:${GOLD};margin-bottom:9px;">${STAR} Meetings</div>
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${CREAM};line-height:1.5;"><strong style="color:${GOLD_LT};">Detachment:</strong> ${esc(detachmentInfo.detachmentMeeting)}${c.nextDetachmentMeeting ? ` <span style="color:#aebbcd;">(next: ${esc(c.nextDetachmentMeeting)})</span>` : ""}</div>
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${CREAM};line-height:1.5;margin-top:7px;"><strong style="color:${GOLD_LT};">Staff:</strong> ${esc(detachmentInfo.staffMeeting)}${c.nextStaffMeeting ? ` <span style="color:#aebbcd;">(next: ${esc(c.nextStaffMeeting)})</span>` : ""}</div>
+            </td>
+          </tr></table>
         </td></tr>
 
         ${goodBlock}
+        ${starsDivider()}
 
-        <!-- Officer roster -->
-        <tr><td style="padding:22px 28px 0;">
+        <!-- Officers -->
+        <tr><td style="padding:20px 28px 0;">
           ${sectionHeader("Detachment Officers")}
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;">${officers}</table>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;border:1px solid ${HAIR};border-radius:4px;overflow:hidden;">${officers}</table>
         </td></tr>
 
         <!-- Membership & dues -->
         <tr><td style="padding:22px 28px 0;">
           ${sectionHeader("Membership & Dues")}
-          <p style="margin:12px 0 10px;font-size:14px;line-height:1.6;color:${INK};">Life membership (one-time fee) by age. To upgrade, contact Paymaster Mark Hoernschemeyer (314-482-3974). Annual dues can be paid by PayPal at stcharlesmarine.org or at a meeting.</p>
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>${dues}</tr></table>
+          <p style="margin:12px 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:1.6;color:${INK};">To upgrade to a life membership, contact Paymaster Mark Hoernschemeyer (314-482-3974). Annual dues can be paid by PayPal at stcharlesmarine.org or at a meeting.</p>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${HAIR};border-radius:4px;overflow:hidden;">
+            <tr><td colspan="5" bgcolor="${GOLD}" style="background:${GOLD};padding:7px 10px;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:${NAVY};">Life Membership &mdash; One-Time Fee</td></tr>
+            <tr>${dues}</tr>
+          </table>
         </td></tr>
 
         <!-- Recent event photos (injected at send time from the Drive folder) -->
         {{PHOTOS}}
 
+        ${starsDivider()}
+
         <!-- Links -->
-        <tr><td style="padding:20px 28px 24px;">
-          <div style="font-size:12px;color:${MUTED};text-align:center;line-height:1.8;">${links}</div>
+        <tr><td style="padding:18px 28px 26px;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${MUTED};text-align:center;line-height:1.9;">${links}</div>
         </td></tr>
 
         <!-- Footer -->
-        <tr><td style="background:${NAVY};padding:20px 28px;text-align:center;">
-          <div style="color:${CREAM};font-size:12px;line-height:1.6;opacity:.85;">St. Charles County Detachment 725, Marine Corps League<br>P.O. Box 1362, St. Peters, MO 63376-0023</div>
-          <div style="margin-top:10px;font-size:12px;"><a href="{{UNSUBSCRIBE}}" style="color:${GOLD};text-decoration:underline;">Unsubscribe</a></div>
+        <tr><td bgcolor="${NAVY}" style="background:${NAVY};padding:26px 28px;text-align:center;">
+          <div style="width:44px;height:44px;border:2px solid ${GOLD};border-radius:50%;line-height:40px;color:${GOLD};font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:bold;margin:0 auto;">725</div>
+          <div style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:19px;color:${GOLD};margin-top:10px;">Semper Fidelis</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;color:${CREAM};font-size:12px;line-height:1.6;opacity:.85;margin-top:8px;">St. Charles County Detachment 725, Marine Corps League<br>P.O. Box 1362, St. Peters, MO 63376-0023</div>
+          <div style="margin-top:16px;">${socialBtn(detachmentInfo.social.facebook, "Facebook")}${socialBtn(detachmentInfo.social.youtube, "YouTube")}</div>
+          <div style="margin-top:16px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#8b97a8;">
+            <a href="{{UNSUBSCRIBE}}" style="color:${GOLD};text-decoration:underline;">Unsubscribe</a>
+          </div>
+        </td></tr>
+
+        <!-- Bottom ribbon -->
+        <tr><td style="padding:0;font-size:0;line-height:0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td width="50%" height="6" bgcolor="${SCARLET}" style="height:6px;font-size:0;line-height:0;">&nbsp;</td>
+            <td width="50%" height="6" bgcolor="${GOLD}" style="height:6px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr></table>
         </td></tr>
 
       </table>
