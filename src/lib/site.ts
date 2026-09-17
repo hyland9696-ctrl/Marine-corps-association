@@ -4,35 +4,73 @@ export const site = {
   shortName: "Detachment 725",
   tagline: "Once a Marine, Always a Marine.",
   location: "St. Charles County, Missouri",
+  nickname: "Devil Dog Pound 8",
   // Production URL — used for canonical links, sitemap, robots, and social
   // share images. Defaults to the live domain; NEXT_PUBLIC_SITE_URL can
   // override it (e.g. for preview/staging deployments).
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.stcharlesmarines.org").replace(/\/$/, ""),
   meeting: {
-    schedule: "First Wednesday of every month, 7:00 PM (1900)",
+    schedule: "Third Thursday of every month, 7:00 PM (1900)",
     venue: "O'Fallon Elks Lodge",
     address: "1163 Tom Ginnever Ave, O'Fallon, MO 63366",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=1163+Tom+Ginnever+Ave+O%27Fallon+MO+63366",
+  },
+  staffMeeting: {
+    schedule: "Second Monday of every month, 7:00 PM (1900)",
+    venue: "AmVets Hall",
+    address: "360 Brown Rd, St. Peters, MO",
   },
   mail: {
     line1: "P.O. Box 1362",
     line2: "St. Peters, MO 63376-0023",
   },
-  phone: "(316) 670-0433",
+  // General public contact email (Commandant). Phone is intentionally omitted —
+  // the detachment uses email + the contact form for public inquiries.
+  email: "mawhite93@gmail.com",
   contacts: {
     paymaster: {
       role: "Paymaster",
       name: "Mark Hoernschemeyer",
+      email: "markscmcl@yahoo.com",
       note: "Membership dues, and address / email / phone updates",
     },
     editor: {
       role: "Scuttlebutt Newsletter Editor",
-      name: "Dave Nichols",
-      email: "dbnichols.iaai@charter.net",
-      phone: "314-599-3310",
+      name: "Ray Hinman",
+      email: "hinman.ray@gmail.com",
       note: "Newsletter submissions and material contributions",
     },
   },
+  // Detachment leadership. The public roster lists role + name; personal phone
+  // numbers are kept to the members' newsletter rather than the public site.
+  officers: [
+    { role: "Commandant", name: "Matt White" },
+    { role: "Sr Vice Commandant", name: "Kirgan Taylor" },
+    { role: "Jr Vice Commandant", name: "Stel Steller" },
+    { role: "Adjutant", name: "Andy Riggle" },
+    { role: "Paymaster", name: "Mark Hoernschemeyer" },
+    { role: "Chaplain", name: "Gene Vaucher" },
+    { role: "Judge Advocate", name: "Janice Hartley" },
+    { role: "Sergeant at Arms", name: "Dave Thomas" },
+    { role: "Auditor / Newsletter Editor", name: "Ray Hinman" },
+    { role: "Auditor", name: "Marilyn Kitchen-New" },
+  ],
+  // Life membership (one-time fee) by age bracket.
+  dues: {
+    rows: [
+      ["0–35", "$1,000"],
+      ["36–50", "$800"],
+      ["51–64", "$600"],
+      ["65–84", "$400"],
+      ["85 & over", "$100"],
+    ],
+    note: "Annual dues can be paid by PayPal at stcharlesmarine.org or at a meeting (cash, check, or credit card).",
+  },
+  // Affiliated Marine Corps League sites.
+  orgLinks: [
+    { label: "Marine Corps League (National)", url: "https://www.mclnational.org" },
+    { label: "Department of Missouri", url: "https://www.momcl.org" },
+  ],
   // Contact form delivery. The site is statically hosted (no server), so form
   // submissions are handled by Formspree (https://formspree.io) — free for low
   // volume. Create a form there, then paste its endpoint below or set

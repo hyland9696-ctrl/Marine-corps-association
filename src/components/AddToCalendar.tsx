@@ -2,27 +2,28 @@
 
 /**
  * Add-to-calendar buttons for the detachment's recurring monthly meeting
- * (first Wednesday, 7:00 PM). Values are computed fresh on click so the links
+ * (third Thursday, 7:00 PM). Values are computed fresh on click so the links
  * always start from the next upcoming meeting, and the .ics carries a monthly
  * recurrence rule so the whole series lands on the member's calendar.
  */
 
-const RRULE = "FREQ=MONTHLY;BYDAY=1WE";
+const RRULE = "FREQ=MONTHLY;BYDAY=3TH";
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
 }
 
-// Next first-Wednesday of the month at 7:00 PM local time.
+// Next third-Thursday of the month at 7:00 PM local time.
 function nextMeeting(): Date {
   const now = new Date();
-  const firstWed = (year: number, month: number) => {
+  const thirdThu = (year: number, month: number) => {
     const d = new Date(year, month, 1, 19, 0, 0, 0);
-    d.setDate(1 + ((3 - d.getDay() + 7) % 7));
+    // First Thursday (Thu = day 4), then add two weeks for the third.
+    d.setDate(1 + ((4 - d.getDay() + 7) % 7) + 14);
     return d;
   };
-  let d = firstWed(now.getFullYear(), now.getMonth());
-  if (d.getTime() < now.getTime()) d = firstWed(now.getFullYear(), now.getMonth() + 1);
+  let d = thirdThu(now.getFullYear(), now.getMonth());
+  if (d.getTime() < now.getTime()) d = thirdThu(now.getFullYear(), now.getMonth() + 1);
   return d;
 }
 

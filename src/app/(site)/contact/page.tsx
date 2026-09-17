@@ -29,11 +29,7 @@ export default function ContactPage() {
                 Questions about membership, events, or getting involved? Send us a note and
                 we&rsquo;ll be in touch.
               </p>
-              <ContactForm
-                endpoint={site.formEndpoint}
-                email={site.contacts.editor.email}
-                phone={site.phone}
-              />
+              <ContactForm endpoint={site.formEndpoint} email={site.email} />
             </Card>
           </Reveal>
 
@@ -50,31 +46,21 @@ export default function ContactPage() {
                 {site.mail.line2}
               </p>
               <h3 className="mt-6 font-display text-lg font-semibold uppercase tracking-wide text-navy">
-                Phone
+                Email
               </h3>
               <p className="mt-3 text-navy/80">
-                <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="hover:text-scarlet">
-                  {site.phone}
+                <a href={`mailto:${site.email}`} className="text-scarlet underline">
+                  {site.email}
                 </a>
               </p>
               <h3 className="mt-6 font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 Follow Us
               </h3>
               <div className="mt-3 flex gap-4">
-                <a
-                  href={site.social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-scarlet underline"
-                >
+                <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="text-scarlet underline">
                   Facebook
                 </a>
-                <a
-                  href={site.social.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-scarlet underline"
-                >
+                <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" className="text-scarlet underline">
                   YouTube
                 </a>
               </div>
@@ -88,6 +74,11 @@ export default function ContactPage() {
               </h3>
               <p className="mt-3 text-navy/80">{site.contacts.paymaster.name}</p>
               <p className="text-sm text-navy/60">{site.contacts.paymaster.note}</p>
+              <p className="mt-2 text-sm">
+                <a href={`mailto:${site.contacts.paymaster.email}`} className="text-scarlet underline">
+                  {site.contacts.paymaster.email}
+                </a>
+              </p>
 
               <h3 className="mt-6 font-display text-lg font-semibold uppercase tracking-wide text-navy">
                 {site.contacts.editor.role}
@@ -99,7 +90,23 @@ export default function ContactPage() {
                   {site.contacts.editor.email}
                 </a>
               </p>
-              <p className="text-sm text-navy/80">{site.contacts.editor.phone}</p>
+            </Card>
+          </Reveal>
+
+          {/* Leadership roster */}
+          <Reveal delay={120} className="md:col-span-2">
+            <Card>
+              <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                Detachment Officers
+              </h3>
+              <dl className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+                {site.officers.map((o) => (
+                  <div key={o.role} className="flex justify-between gap-4 border-b border-navy/10 py-1.5">
+                    <dt className="text-sm text-navy/60">{o.role}</dt>
+                    <dd className="text-sm font-semibold text-navy">{o.name}</dd>
+                  </div>
+                ))}
+              </dl>
             </Card>
           </Reveal>
 
@@ -109,7 +116,12 @@ export default function ContactPage() {
                 Come See Us
               </h3>
               <p className="mt-3 text-navy/80">
-                {site.meeting.schedule} at {site.meeting.venue}, {site.meeting.address}.
+                <strong>Detachment meeting:</strong> {site.meeting.schedule} at {site.meeting.venue},{" "}
+                {site.meeting.address}.
+              </p>
+              <p className="mt-2 text-navy/80">
+                <strong>Staff meeting:</strong> {site.staffMeeting.schedule} at{" "}
+                {site.staffMeeting.venue}, {site.staffMeeting.address}.
               </p>
               <div className="mt-4">
                 <Button href={site.meeting.mapsUrl} external>

@@ -12,11 +12,9 @@ type Status = "idle" | "submitting" | "success" | "error" | "unconfigured";
 export default function ContactForm({
   endpoint,
   email,
-  phone,
 }: {
   endpoint: string;
   email: string;
-  phone: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -156,7 +154,7 @@ export default function ContactForm({
               <a href={`mailto:${email}`} className="underline">
                 {email}
               </a>{" "}
-              or call {phone}.
+              instead.
             </span>
           )}
           {status === "unconfigured" && (
@@ -165,7 +163,7 @@ export default function ContactForm({
               <a href={`mailto:${email}`} className="text-scarlet underline">
                 {email}
               </a>{" "}
-              or call {phone}.
+              instead.
             </span>
           )}
         </p>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const steps = [
   {
     title: "Come to a Meeting",
-    description: `Join us the first Wednesday of the month at 7:00 PM, ${site.meeting.venue}. Guests and prospective members are welcome.`,
+    description: `Join us the third Thursday of the month at 7:00 PM, ${site.meeting.venue}. Guests and prospective members are welcome.`,
   },
   {
     title: "Talk With Our Paymaster",
@@ -92,10 +92,20 @@ export default function GetInvolvedPage() {
                 Dues
               </h2>
               <p className="mt-4 text-navy/80 leading-relaxed">
-                Dues can be paid in person at a meeting (cash, check, or credit card)
-                to our Paymaster, {site.contacts.paymaster.name}. Contact us for current
-                dues amounts and online payment options.
+                {site.dues.note} To upgrade to a life membership, talk with our Paymaster,{" "}
+                {site.contacts.paymaster.name}.
               </p>
+              <h3 className="mt-6 font-display text-base font-semibold uppercase tracking-wide text-navy">
+                Life Membership (one-time fee)
+              </h3>
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
+                {site.dues.rows.map(([age, fee]) => (
+                  <div key={age} className="rounded-sm border border-navy/10 bg-white p-3 text-center">
+                    <div className="text-xs text-navy/50">Age {age}</div>
+                    <div className="font-display text-lg font-bold text-navy">{fee}</div>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </div>
 

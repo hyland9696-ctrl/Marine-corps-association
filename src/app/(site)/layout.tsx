@@ -16,7 +16,7 @@ const jsonLd = {
   logo: `${site.url}/icon`,
   description,
   slogan: site.tagline,
-  telephone: site.phone,
+  email: site.email,
   sameAs: [site.social.facebook, site.social.youtube],
   address: {
     "@type": "PostalAddress",

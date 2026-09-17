@@ -69,6 +69,15 @@ export default function EventsPage() {
                   />
                 </div>
               </Card>
+              <Card className="mt-4">
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-scarlet">
+                  Staff Meeting
+                </p>
+                <p className="mt-1 font-display text-lg font-semibold text-navy">{site.staffMeeting.schedule}</p>
+                <p className="mt-1 text-sm text-navy/70">
+                  {site.staffMeeting.venue}, {site.staffMeeting.address}
+                </p>
+              </Card>
               <p className="mt-4 text-sm text-navy/60">
                 New to the detachment? Prospective members and guests are always welcome. Just
                 come by, or reach out ahead of time on our{" "}

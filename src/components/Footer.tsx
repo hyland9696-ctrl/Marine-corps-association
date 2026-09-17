@@ -9,7 +9,9 @@ export default function Footer() {
           <p className="font-display text-lg font-semibold tracking-wide uppercase text-gold">
             {site.name}
           </p>
-          <p className="mt-2 text-sm text-cream/70">{site.org}</p>
+          <p className="mt-2 text-sm text-cream/70">
+            {site.org} · {site.nickname}
+          </p>
           <p className="mt-4 text-sm italic text-cream/70">&ldquo;{site.tagline}&rdquo;</p>
         </div>
 
@@ -28,7 +30,11 @@ export default function Footer() {
           </p>
           <p className="mt-3 text-sm text-cream/80">{site.mail.line1}</p>
           <p className="text-sm text-cream/80">{site.mail.line2}</p>
-          <p className="mt-2 text-sm text-cream/80">{site.phone}</p>
+          <p className="mt-2 text-sm">
+            <a href={`mailto:${site.email}`} className="text-gold-light hover:text-gold">
+              {site.email}
+            </a>
+          </p>
           <div className="mt-3 flex gap-4">
             <a
               href={site.social.facebook}
@@ -66,6 +72,19 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gold/20 px-4 py-5 text-center text-xs text-cream/60 sm:px-6">
+        <div className="mb-2 flex flex-wrap justify-center gap-x-4 gap-y-1">
+          {site.orgLinks.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold-light hover:text-gold"
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
         &copy; {new Date().getFullYear()} {site.name}, {site.org}. Semper Fidelis.
       </div>
     </footer>

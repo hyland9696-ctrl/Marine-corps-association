@@ -22,7 +22,7 @@ export default function HomePage() {
             {site.name}
           </h1>
           <p className="mt-2 font-display text-xl text-gold-light sm:text-2xl">
-            {site.org}, {site.location}
+            {site.org}, {site.location} · {site.nickname}
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80 sm:text-lg">
             Marines never stop serving. We&rsquo;re a home for Marines, FMF Corpsmen, and their

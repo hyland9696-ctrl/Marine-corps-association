@@ -109,9 +109,9 @@ export default function SupportPage() {
                 {site.mail.line2}
               </p>
               <p className="mt-4 text-sm text-navy/70">
-                You can also reach us by phone at{" "}
-                <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="underline">
-                  {site.phone}
+                You can also reach us by email at{" "}
+                <a href={`mailto:${site.email}`} className="underline">
+                  {site.email}
                 </a>{" "}
                 or through our{" "}
                 <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="underline">
