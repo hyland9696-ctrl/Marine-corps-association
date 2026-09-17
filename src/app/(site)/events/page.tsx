@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import AddToCalendar from "@/components/AddToCalendar";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -113,15 +114,14 @@ export default function EventsPage() {
                 Stay in the Loop
               </h3>
               <p className="mt-3 text-sm text-navy/70">
-                Our &ldquo;Scuttlebutt&rdquo; newsletter and Facebook page carry the latest on
-                meetings, events, and detachment news.
+                Get our &ldquo;Scuttlebutt&rdquo; newsletter by email, or follow along on Facebook.
               </p>
-              <div className="mt-6 flex flex-col gap-3">
+              <div className="mt-5">
+                <NewsletterSignup endpoint={site.newsletterEndpoint} />
+              </div>
+              <div className="mt-4">
                 <Button href={site.social.facebook} variant="outline-dark" external>
                   Follow on Facebook
-                </Button>
-                <Button href="/contact" variant="primary">
-                  Get the Newsletter
                 </Button>
               </div>
             </Card>

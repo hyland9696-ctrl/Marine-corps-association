@@ -44,6 +44,11 @@ export const site = {
   // NEXT_PUBLIC_DONATE_URL. While empty, the Donate buttons invite people to
   // give by mail/phone instead of linking nowhere.
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL ?? "",
+  // Newsletter signup. Points at the detachment's Google Apps Script web-app
+  // URL (the free "send engine" — see /newsletter/README). The public signup
+  // form POSTs new subscribers here; while empty, the form invites people to
+  // email instead. Set NEXT_PUBLIC_NEWSLETTER_ENDPOINT or paste it below.
+  newsletterEndpoint: process.env.NEXT_PUBLIC_NEWSLETTER_ENDPOINT ?? "",
   // Private "Marketing HQ" page. Unlisted (not in nav, excluded from the
   // sitemap, and set to noindex) and ideally password-protected via GoDaddy
   // cPanel Directory Privacy. Change this slug to rotate the secret URL.

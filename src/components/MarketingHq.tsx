@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { site } from "@/lib/site";
+import NewsletterComposer from "@/components/NewsletterComposer";
 
 /* ---------- small helpers ---------- */
 
@@ -281,6 +282,46 @@ export default function MarketingHq() {
               setup="Connect donation link"
             />
           </div>
+        </Panel>
+
+        {/* Newsletter */}
+        <Panel eyebrow="Newsletter" title="Monthly Newsletter">
+          <div className="mb-6 rounded-sm border border-gold/25 bg-gold/5 p-4 text-sm text-cream/75">
+            <p className="font-display text-xs font-semibold uppercase tracking-wide text-gold">
+              How it works — free, sent from your Gmail
+            </p>
+            <ol className="mt-2 list-decimal space-y-1 pl-5">
+              <li>
+                <strong>One-time setup:</strong> create a Google Sheet, then add the send script.{" "}
+                <a href="/newsletter/README.md" target="_blank" rel="noopener noreferrer" className="text-gold underline">
+                  Full instructions
+                </a>{" "}
+                ·{" "}
+                <a href="/newsletter/Code.gs" download className="text-gold underline">
+                  Download the script (Code.gs)
+                </a>{" "}
+                ·{" "}
+                <a href="https://sheets.google.com" target="_blank" rel="noopener noreferrer" className="text-gold underline">
+                  New Google Sheet
+                </a>
+              </li>
+              <li>
+                <strong>Each month:</strong> write the newsletter below, click{" "}
+                <em>Copy subject</em> and <em>Copy email HTML</em>.
+              </li>
+              <li>
+                <strong>Send:</strong> paste both into your sheet&rsquo;s <em>Compose</em> tab and
+                use its <strong>📣 Newsletter → Send</strong> menu. Everyone gets it with a working
+                unsubscribe link.
+              </li>
+            </ol>
+            <p className="mt-3 text-cream/55">
+              Subscribers collect automatically from the website&rsquo;s signup form into your
+              Google Sheet.{" "}
+              {site.newsletterEndpoint ? "Signup is connected ✓" : "Signup not connected yet — send me your Web App URL."}
+            </p>
+          </div>
+          <NewsletterComposer />
         </Panel>
 
         {/* Copy-paste templates */}
