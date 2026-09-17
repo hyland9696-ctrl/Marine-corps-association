@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import { Oswald, Inter } from "next/font/google";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PageFade from "@/components/PageFade";
-import BackToTop from "@/components/BackToTop";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -42,9 +38,6 @@ export const metadata: Metadata = {
     "Marine Corps Birthday Ball",
     "FMF Corpsmen",
   ],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -71,46 +64,10 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: `${site.name}, ${site.org}`,
-  alternateName: site.shortName,
-  url: site.url,
-  logo: `${site.url}/icon`,
-  description,
-  slogan: site.tagline,
-  telephone: site.phone,
-  sameAs: [site.social.facebook, site.social.youtube],
-  address: {
-    "@type": "PostalAddress",
-    postOfficeBoxNumber: site.mail.line1,
-    addressLocality: "St. Peters",
-    addressRegion: "MO",
-    postalCode: "63376-0023",
-    addressCountry: "US",
-  },
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: site.location,
-  },
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${oswald.variable} ${inter.variable}`}>
-      <body className="flex min-h-screen flex-col antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Header />
-        <main className="flex-1">
-          <PageFade>{children}</PageFade>
-        </main>
-        <Footer />
-        <BackToTop />
-      </body>
+      <body className="flex min-h-screen flex-col antialiased">{children}</body>
     </html>
   );
 }

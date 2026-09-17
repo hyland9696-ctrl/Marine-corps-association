@@ -44,6 +44,18 @@ export const site = {
   // NEXT_PUBLIC_DONATE_URL. While empty, the Donate buttons invite people to
   // give by mail/phone instead of linking nowhere.
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL ?? "",
+  // Private "Marketing HQ" page. Unlisted (not in nav, excluded from the
+  // sitemap, and set to noindex) and ideally password-protected via GoDaddy
+  // cPanel Directory Privacy. Change this slug to rotate the secret URL.
+  hqPath: "hq-725-x9k4m",
+  // Optional launchpad links used only on the private HQ page. Paste the
+  // detachment's dashboards here (or leave blank and set them later).
+  tools: {
+    // Your email platform's campaign dashboard (MailerLite/Brevo/Mailchimp).
+    emailDashboardUrl: process.env.NEXT_PUBLIC_EMAIL_DASHBOARD_URL ?? "",
+    // Website analytics dashboard (Plausible, Google Analytics, etc.).
+    analyticsUrl: process.env.NEXT_PUBLIC_ANALYTICS_URL ?? "",
+  },
   social: {
     facebook: "https://www.facebook.com/StCharlesMarines/",
     youtube: "https://www.youtube.com/@stcharlescountymomarinesmc1466",

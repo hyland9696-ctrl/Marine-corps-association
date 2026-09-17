@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="180" viewBox="0 0 760 180" role="img" aria-label="St. Charles County Detachment 725, Marine Corps League">
+  <title>St. Charles County Detachment 725 — Marine Corps League</title>
+  <!-- Badge -->
+  <circle cx="90" cy="90" r="70" fill="#0a1220"/>
+  <circle cx="90" cy="90" r="70" fill="none" stroke="#c9a349" stroke-width="6"/>
+  <text x="90" y="90" fill="#c9a349" font-family="Oswald, 'Arial Narrow', Arial, sans-serif" font-size="50" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing="1">725</text>
+  <!-- Wordmark -->
+  <g font-family="Oswald, 'Arial Narrow', Arial, sans-serif" fill="#0a1220">
+    <text x="190" y="66" font-size="34" font-weight="700" letter-spacing="0.5">ST. CHARLES COUNTY</text>
+    <text x="190" y="104" font-size="34" font-weight="700" letter-spacing="0.5">DETACHMENT 725</text>
+    <text x="190" y="140" font-size="16" font-weight="600" letter-spacing="3.5" fill="#8a6d24">MARINE CORPS LEAGUE &#183; SEMPER FIDELIS</text>
+  </g>
+</svg>
