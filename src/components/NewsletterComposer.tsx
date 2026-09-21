@@ -70,26 +70,26 @@ export default function NewsletterComposer() {
       <div className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className={labelCls}>Issue (month & year)</label>
-            <input className={inputCls} value={c.issue} onChange={(e) => set("issue", e.target.value)} />
+            <label htmlFor="nlc-issue" className={labelCls}>Issue (month & year)</label>
+            <input id="nlc-issue" className={inputCls} value={c.issue} onChange={(e) => set("issue", e.target.value)} />
           </div>
           <div>
-            <label className={labelCls}>Subject line</label>
-            <input className={inputCls} value={subject} onChange={(e) => setSubject(e.target.value)} />
+            <label htmlFor="nlc-subject" className={labelCls}>Subject line</label>
+            <input id="nlc-subject" className={inputCls} value={subject} onChange={(e) => setSubject(e.target.value)} />
           </div>
         </div>
 
         <div>
-          <label className={labelCls}>Editor column — heading</label>
-          <input className={inputCls} value={c.editorTitle} onChange={(e) => set("editorTitle", e.target.value)} />
+          <label htmlFor="nlc-etitle" className={labelCls}>Editor column — heading</label>
+          <input id="nlc-etitle" className={inputCls} value={c.editorTitle} onChange={(e) => set("editorTitle", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>Editor column — body</label>
-          <textarea className={inputCls} rows={6} value={c.editorColumn} onChange={(e) => set("editorColumn", e.target.value)} />
+          <label htmlFor="nlc-ecol" className={labelCls}>Editor column — body</label>
+          <textarea id="nlc-ecol" className={inputCls} rows={6} value={c.editorColumn} onChange={(e) => set("editorColumn", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>Signed</label>
-          <input className={inputCls} value={c.editorName} onChange={(e) => set("editorName", e.target.value)} />
+          <label htmlFor="nlc-signed" className={labelCls}>Signed</label>
+          <input id="nlc-signed" className={inputCls} value={c.editorName} onChange={(e) => set("editorName", e.target.value)} />
         </div>
 
         <div>
@@ -109,19 +109,21 @@ export default function NewsletterComposer() {
                 <input
                   className={inputCls + " mt-0 w-28 shrink-0"}
                   placeholder="Oct 17"
+                  aria-label={`Event ${i + 1} date`}
                   value={ev.date}
                   onChange={(e) => setEvent(i, { date: e.target.value })}
                 />
                 <input
                   className={inputCls + " mt-0"}
                   placeholder="What's happening…"
+                  aria-label={`Event ${i + 1} description`}
                   value={ev.text}
                   onChange={(e) => setEvent(i, { text: e.target.value })}
                 />
                 <button
                   type="button"
                   onClick={() => set("events", c.events.filter((_, j) => j !== i))}
-                  className="shrink-0 rounded-sm border border-cream/15 px-2 text-sm text-cream/50 hover:border-scarlet hover:text-scarlet"
+                  className="shrink-0 rounded-sm border border-cream/15 px-2 text-sm text-cream/70 hover:border-scarlet hover:text-scarlet"
                   aria-label="Remove event"
                 >
                   ✕
@@ -133,25 +135,26 @@ export default function NewsletterComposer() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className={labelCls}>Next detachment meeting</label>
-            <input className={inputCls} value={c.nextDetachmentMeeting} onChange={(e) => set("nextDetachmentMeeting", e.target.value)} />
+            <label htmlFor="nlc-nextdet" className={labelCls}>Next detachment meeting</label>
+            <input id="nlc-nextdet" className={inputCls} value={c.nextDetachmentMeeting} onChange={(e) => set("nextDetachmentMeeting", e.target.value)} />
           </div>
           <div>
-            <label className={labelCls}>Next staff meeting</label>
-            <input className={inputCls} value={c.nextStaffMeeting} onChange={(e) => set("nextStaffMeeting", e.target.value)} />
+            <label htmlFor="nlc-nextstaff" className={labelCls}>Next staff meeting</label>
+            <input id="nlc-nextstaff" className={inputCls} value={c.nextStaffMeeting} onChange={(e) => set("nextStaffMeeting", e.target.value)} />
           </div>
         </div>
 
         <div>
-          <label className={labelCls}>Good of the League (optional)</label>
-          <textarea className={inputCls} rows={2} value={c.goodOfLeague} onChange={(e) => set("goodOfLeague", e.target.value)} />
+          <label htmlFor="nlc-good" className={labelCls}>Good of the League (optional)</label>
+          <textarea id="nlc-good" className={inputCls} rows={2} value={c.goodOfLeague} onChange={(e) => set("goodOfLeague", e.target.value)} />
         </div>
 
         {/* Event photos */}
         <div>
-          <label className={labelCls}>Recent event photos</label>
+          <label htmlFor="nlc-photos" className={labelCls}>Recent event photos</label>
           <div className="mt-2 rounded-sm border border-dashed border-gold/40 bg-navy p-3">
             <input
+              id="nlc-photos"
               type="file"
               accept="image/*"
               multiple
@@ -163,12 +166,12 @@ export default function NewsletterComposer() {
                 {photos.map((src, i) => (
                   <div key={i} className="relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt="" className="h-16 w-16 rounded-sm object-cover" />
+                    <img src={src} alt={`Preview photo ${i + 1}`} className="h-16 w-16 rounded-sm object-cover" />
                     <button
                       type="button"
                       onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
                       className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-scarlet text-xs text-cream"
-                      aria-label="Remove photo"
+                      aria-label={`Remove photo ${i + 1}`}
                     >
                       ✕
                     </button>
@@ -176,7 +179,7 @@ export default function NewsletterComposer() {
                 ))}
               </div>
             )}
-            <p className="mt-2 text-xs text-cream/50">
+            <p className="mt-2 text-xs text-cream/70">
               These are a <strong>preview</strong> so you can see the layout. To actually send them,
               drop the same photos into your Google Drive{" "}
               <strong>&ldquo;Scuttlebutt Photos&rdquo;</strong> folder — the send engine embeds them
@@ -185,7 +188,7 @@ export default function NewsletterComposer() {
           </div>
         </div>
 
-        <p className="text-xs text-cream/50">
+        <p className="text-xs text-cream/70">
           The officer roster, meeting schedule, and dues table are built in automatically — you only
           edit the parts that change each month.
         </p>
@@ -206,7 +209,7 @@ export default function NewsletterComposer() {
             {copiedHtml ? "Copied ✓" : "Copy email HTML"}
           </button>
         </div>
-        <p className="text-xs text-cream/50">
+        <p className="text-xs text-cream/70">
           Paste the subject into cell <strong>B1</strong> and the HTML into <strong>B2</strong> on
           your Google Sheet&rsquo;s <em>Compose</em> tab, then use its
           <strong> 📣 Newsletter → Send</strong> menu.

@@ -51,6 +51,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={`group relative py-1 font-display text-sm font-medium tracking-wide uppercase transition-colors ${
                   active ? "text-gold" : "text-cream/90 hover:text-gold"
                 }`}
@@ -102,6 +103,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={`rounded px-2 py-2 font-display text-sm font-medium tracking-wide uppercase transition-colors ${
                   active ? "bg-navy-light text-gold" : "text-cream/90 hover:bg-navy-light hover:text-gold"
                 }`}

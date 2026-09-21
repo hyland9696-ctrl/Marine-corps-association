@@ -67,6 +67,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${oswald.variable} ${inter.variable}`}>
+      <head>
+        {/* Without JS, scroll-reveal elements must not stay hidden. */}
+        <noscript>
+          <style>{`.opacity-0{opacity:1!important}.translate-y-8,.translate-y-6,.translate-y-4{transform:none!important}.animate-page-fade{animation:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="flex min-h-screen flex-col antialiased">{children}</body>
     </html>
   );

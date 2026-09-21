@@ -77,7 +77,7 @@ export default function AboutPage() {
                   <p>{site.contacts.editor.note}</p>
                 </div>
               </div>
-              <p className="mt-4 text-xs text-navy/50">
+              <p className="mt-4 text-xs text-navy/70">
                 Looking for a specific officer or committee chair? Reach out through our{" "}
                 <a href={site.social.facebook} className="underline" target="_blank" rel="noopener noreferrer">
                   Facebook page

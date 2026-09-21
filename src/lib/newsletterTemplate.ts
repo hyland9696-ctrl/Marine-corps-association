@@ -176,7 +176,7 @@ export function buildNewsletterHtml(c: NewsletterContent): string {
     `<a href="${href}" style="display:inline-block;border:1px solid ${GOLD};border-radius:4px;padding:7px 18px;margin:0 4px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:${GOLD};text-decoration:none;">${label}</a>`;
 
   return `<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>The Scuttlebutt</title></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>The Scuttlebutt</title></head>
 <body style="margin:0;padding:0;background:#ece4d6;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(c.preheader)}</div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ece4d6" style="background:#ece4d6;padding:24px 0;">

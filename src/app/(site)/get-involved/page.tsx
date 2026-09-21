@@ -101,7 +101,7 @@ export default function GetInvolvedPage() {
               <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
                 {site.dues.rows.map(([age, fee]) => (
                   <div key={age} className="rounded-sm border border-navy/10 bg-white p-3 text-center">
-                    <div className="text-xs text-navy/50">Age {age}</div>
+                    <div className="text-xs text-navy/70">Age {age}</div>
                     <div className="font-display text-lg font-bold text-navy">{fee}</div>
                   </div>
                 ))}

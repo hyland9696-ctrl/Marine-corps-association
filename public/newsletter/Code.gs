@@ -247,7 +247,7 @@ function buildPhotos_() {
       var key = 'photo' + j;
       inline[key] = imgs[j].getBlob();
       row += '<td width="50%" style="padding:5px;vertical-align:top;"><img src="cid:' + key +
-        '" width="262" style="width:100%;max-width:262px;border-radius:4px;display:block;border:3px solid #ffffff;outline:1px solid #c9a349;"></td>';
+        '" width="262" alt="Detachment 725 event photo" style="width:100%;max-width:262px;border-radius:4px;display:block;border:3px solid #ffffff;outline:1px solid #c9a349;"></td>';
     }
     if (imgs.length - i === 1) row += '<td width="50%" style="padding:5px;">&nbsp;</td>';
     cells += '<tr>' + row + '</tr>';

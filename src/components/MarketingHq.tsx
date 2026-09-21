@@ -161,6 +161,7 @@ export default function MarketingHq() {
           </div>
         </header>
 
+        <main className="space-y-8">
         {/* Brand kit — colors */}
         <Panel eyebrow="Brand Kit" title="Colors">
           <p className="mb-4 text-sm text-cream/60">Click any swatch to copy its hex code.</p>
@@ -232,7 +233,7 @@ export default function MarketingHq() {
               desc="1200×630 image — for Facebook/link previews and posts."
             />
           </div>
-          <p className="mt-4 text-xs text-cream/50">
+          <p className="mt-4 text-xs text-cream/70">
             Want photos, flyers, or a print-ready logo added here? Drop the files in and I&rsquo;ll
             list them — or ask me to generate them.
           </p>
@@ -340,8 +341,9 @@ export default function MarketingHq() {
             ))}
           </div>
         </Panel>
+        </main>
 
-        <footer className="border-t border-cream/10 pt-6 text-center text-xs text-cream/40">
+        <footer className="border-t border-cream/10 pt-6 text-center text-xs text-cream/70">
           Marketing HQ · {site.name} · Internal use only
         </footer>
       </div>
