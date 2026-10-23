@@ -22,7 +22,7 @@ const ways = [
   {
     title: "Attend a BBQ Fundraiser",
     description:
-      "Throughout the year we host BBQ fundraisers that support the detachment's charitable work and community programs.",
+      "Throughout the year we host BBQ fundraisers that support the detachment's charitable work and community programs. See the next date on our BBQ page.",
   },
   {
     title: "Support the Focus Marine Foundation",

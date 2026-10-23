@@ -108,6 +108,7 @@ export const site = {
     { href: "/about", label: "About" },
     { href: "/young-marines", label: "Young Marines" },
     { href: "/events", label: "Events" },
+    { href: "/bbq", label: "BBQ" },
     { href: "/gallery", label: "Gallery" },
     { href: "/get-involved", label: "Get Involved" },
     { href: "/support", label: "Support Us" },
@@ -146,6 +147,18 @@ export const programs = [
     description:
       "We support the Focus Marine Foundation's work helping combat veterans recover through fly-fishing and outdoor programs.",
   },
+];
+
+// BBQ & food sales. Add upcoming cookouts to `bbqUpcoming` (newest first is
+// fine; the page sorts nothing, so list them in the order you want shown) and
+// move finished ones into `bbqRecent`. While `bbqUpcoming` is empty the page
+// tells visitors where dates get posted instead of showing a blank list.
+export type Cookout = { date: string; place: string; what: string };
+export const bbqUpcoming: Cookout[] = [];
+export const bbqRecent: Cookout[] = [
+  { date: "Sep 26, 2026", place: "Valente's", what: "Barbecue sale" },
+  { date: "Oct 10, 2026", place: "Twilight market, Old Town St. Peters", what: "Hamburgers & hot dog sale" },
+  { date: "Oct 17, 2026", place: "O'Fallon Elks Lodge", what: "Family night: hot dogs & s'mores over the fire" },
 ];
 
 // Photo gallery. Drop image files into `public/photos/` and list them here to

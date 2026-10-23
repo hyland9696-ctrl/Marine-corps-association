@@ -17,6 +17,10 @@ npm run dev
 
 Site copy and contact details live in `src/lib/site.ts`. Update that file to change meeting times, contacts, or program descriptions site-wide.
 
+## BBQ page
+
+Add upcoming cookouts to `bbqUpcoming` in `src/lib/site.ts` (and move finished ones to `bbqRecent`). While `bbqUpcoming` is empty, the BBQ page tells visitors where dates get posted.
+
 ## Deploying
 
-This is a standard Next.js app — deploys cleanly to Vercel (recommended) or any Node hosting platform. Run `npm run build && npm start` to run a production build locally.
+The site is a static export (`output: "export"`) hosted on GoDaddy. Run `npm run build`, then upload the contents of the `out/` folder (it includes `.htaccess` with the security headers). The build needs no network access.

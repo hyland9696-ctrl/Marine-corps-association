@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import AddToCalendar from "@/components/AddToCalendar";
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   description: "Meeting schedule and annual events for St. Charles County Detachment 725.",
 };
 
-const annualEvents = [
+const annualEvents: { title: string; when: string; description: string; href?: string; cta?: string }[] = [
   {
     title: "Toys for Tots Campaign",
     when: "Holiday Season",
@@ -25,6 +26,8 @@ const annualEvents = [
     title: "Family BBQ Fundraisers",
     when: "Throughout the Year",
     description: "Fellowship and fundraising, open to members and their families.",
+    href: "/bbq",
+    cta: "See BBQ dates",
   },
   {
     title: "Marine Corps Birthday Ball",
@@ -100,6 +103,11 @@ export default function EventsPage() {
                         {e.title}
                       </h3>
                       <p className="mt-1 text-sm text-navy/70">{e.description}</p>
+                      {e.href && (
+                        <Link href={e.href} className="mt-2 inline-block text-sm font-semibold text-scarlet underline underline-offset-2">
+                          {e.cta}
+                        </Link>
+                      )}
                     </div>
                     <span className="font-display text-sm font-semibold tracking-wide text-scarlet uppercase whitespace-nowrap">
                       {e.when}

@@ -97,7 +97,7 @@ export default function OpengraphImage() {
             fontSize: 26,
           }}
         >
-          <span style={{ display: "flex", color: GOLD }}>▪</span>
+          <span style={{ display: "flex", width: 10, height: 10, background: GOLD }} />
           <span style={{ display: "flex" }}>{site.meeting.schedule}</span>
         </div>
       </div>

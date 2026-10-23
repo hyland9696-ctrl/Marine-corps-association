@@ -44,7 +44,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {site.nav.map((item) => {
             const active = pathname === item.href;
             return (
@@ -52,7 +52,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`group relative py-1 font-display text-sm font-medium tracking-wide uppercase transition-colors ${
+                className={`group relative whitespace-nowrap py-1 font-display text-sm font-medium tracking-wide uppercase transition-colors ${
                   active ? "text-gold" : "text-cream/90 hover:text-gold"
                 }`}
               >
@@ -77,7 +77,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 xl:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
         >
@@ -92,7 +92,7 @@ export default function Header() {
       </div>
 
       <nav
-        className={`overflow-hidden transition-all duration-300 ease-in-out lg:hidden ${
+        className={`overflow-hidden transition-all duration-300 ease-in-out xl:hidden ${
           open ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
