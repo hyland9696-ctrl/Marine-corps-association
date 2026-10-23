@@ -13,6 +13,18 @@ export const metadata: Metadata = {
 
 const annualEvents: { title: string; when: string; description: string; href?: string; cta?: string }[] = [
   {
+    title: "Annual Fundraising Golf Tournament",
+    when: "September 19, 2026",
+    description: "Four-person scramble at Bear Creek Golf Club, Wentzville. Benefits scholarships, Focus Marines, Toys for Tots, and the Young Marines.",
+    href: "/golf",
+    cta: "Tournament details",
+  },
+  {
+    title: "Marine Corps Birthday",
+    when: "November 10",
+    description: "The Corps was founded November 10, 1775. The detachment marks the day every year with its Birthday Ball.",
+  },
+  {
     title: "Toys for Tots Campaign",
     when: "Holiday Season",
     description: "Collecting and distributing toys to children across St. Charles County.",
@@ -53,7 +65,10 @@ export default function EventsPage() {
                 Monthly Meeting
               </h2>
               <Card className="mt-4">
-                <p className="font-display text-xl font-semibold text-navy">{site.meeting.schedule}</p>
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-scarlet">
+                  {site.meeting.changeNote}
+                </p>
+                <p className="mt-2 font-display text-xl font-semibold text-navy">{site.meeting.schedule}</p>
                 <p className="mt-2 text-navy/70">{site.meeting.venue}</p>
                 <p className="text-navy/70">{site.meeting.address}</p>
                 <div className="mt-4">

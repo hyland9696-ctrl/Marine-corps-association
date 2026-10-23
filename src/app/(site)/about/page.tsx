@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
-import { site } from "@/lib/site";
+import { photos, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -49,6 +50,46 @@ export default function AboutPage() {
             </p>
 
             <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+              Certified Honor Guard
+            </h2>
+            <figure className="mt-4 overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/photos/honor-guard.jpg" alt="Detachment 725 Honor Guard presenting the colors" className="w-full" loading="lazy" />
+            </figure>
+            <p className="mt-4 text-navy/80 leading-relaxed">
+              Our Color Guard presents the colors at public events, parades, and ceremonies, and
+              our Honor Guard provides military honors for fallen Marines and veterans.
+            </p>
+            <p className="mt-4 text-navy/80 leading-relaxed">
+              <strong>We are looking for a few good men and women</strong> to join the Color
+              Guard and/or the Honor Guard. Many of the current members are no longer able to
+              participate. If you&rsquo;re retired or able to get a day off once in a while, we
+              could use your help; many of the events are on weekends or holidays. Contact Color
+              Guard Commander {site.colorGuard.commander} at{" "}
+              <a href={`mailto:${site.colorGuard.email}`} className="underline">
+                {site.colorGuard.email}
+              </a>
+              .
+            </p>
+
+            <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+              In the Community
+            </h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              {photos
+                .filter((ph) => !ph.src.includes("honor-guard"))
+                .map((ph) => (
+                  <figure key={ph.src} className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
+                    <div className="aspect-[4/3] overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={ph.src} alt={ph.caption} className="h-full w-full object-cover" loading="lazy" />
+                    </div>
+                    <figcaption className="px-3 py-2 text-xs text-navy/70">{ph.caption}</figcaption>
+                  </figure>
+                ))}
+            </div>
+
+            <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
               Our Mission
             </h2>
             <blockquote className="mt-4 border-l-4 border-scarlet pl-6 text-navy/80 italic leading-relaxed">
@@ -78,7 +119,11 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="mt-4 text-xs text-navy/70">
-                Looking for a specific officer or committee chair? Reach out through our{" "}
+                The full officer roster is on the{" "}
+                <Link href="/contact" className="underline">
+                  Contact page
+                </Link>
+                . Looking for a committee chair? Reach out through our{" "}
                 <a href={site.social.facebook} className="underline" target="_blank" rel="noopener noreferrer">
                   Facebook page
                 </a>{" "}

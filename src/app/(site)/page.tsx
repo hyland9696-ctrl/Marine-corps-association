@@ -68,12 +68,14 @@ export default function HomePage() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {programs.map((p, i) => (
               <Reveal key={p.title} delay={i * 80}>
-                <Card>
-                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-navy/70">{p.description}</p>
-                </Card>
+                <Link href={p.href} className="block h-full">
+                  <Card className="h-full">
+                    <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                      {p.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-navy/70">{p.description}</p>
+                  </Card>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -92,6 +94,7 @@ export default function HomePage() {
             <p className="mt-1 text-cream/80">
               {site.meeting.venue}, {site.meeting.address}
             </p>
+            <p className="mt-2 text-sm text-gold-light">{site.meeting.changeNote}</p>
           </Reveal>
           <Reveal delay={120}>
             <Button href="/events" variant="gold">

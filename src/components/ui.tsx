@@ -69,16 +69,27 @@ export function Button({
     gold: "bg-gold text-navy hover:bg-gold-light hover:shadow-gold/40",
   };
 
-  const externalProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
-
-  return (
-    <Link
-      href={href}
-      {...externalProps}
-      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-sm px-6 py-3 font-display text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-none ${styles[variant]}`}
-    >
+  const className = `group relative inline-flex items-center justify-center overflow-hidden rounded-sm px-6 py-3 font-display text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-none ${styles[variant]}`;
+  const inner = (
+    <>
       <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
       <span className="relative">{children}</span>
+    </>
+  );
+
+  // External URLs and file downloads use a plain anchor: Next's <Link> would
+  // try to prefetch them as routes (and 404 on static hosting).
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {inner}
     </Link>
   );
 }

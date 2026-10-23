@@ -17,7 +17,7 @@ const ways = [
   {
     title: "Sponsor or Play in Our Golf Tournament",
     description:
-      "Our annual Scholarship Golf Tournament funds scholarships for Marine-connected students. Sponsorships and player registrations directly support that fund.",
+      "Our annual fundraising golf tournament pays for $1,200 scholarships. A $250 hole sponsorship puts your sign on the course; details are on the Golf Tournament page.",
   },
   {
     title: "Attend a BBQ Fundraiser",
@@ -25,9 +25,9 @@ const ways = [
       "Throughout the year we host BBQ fundraisers that support the detachment's charitable work and community programs. See the next date on our BBQ page.",
   },
   {
-    title: "Support the Focus Marine Foundation",
+    title: "Support the Focus Marines Foundation",
     description:
-      "We partner with the Focus Marine Foundation, which helps combat veterans recover through fly-fishing and outdoor programs.",
+      "Part of what we raise goes to the Focus Marines Foundation, a St. Louis-area nonprofit that runs a free, week-long program helping veterans transition to civilian life.",
   },
   {
     title: "Give Toward Funeral Honors",

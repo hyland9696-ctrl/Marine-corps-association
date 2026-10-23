@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { pages, site } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -52,6 +52,16 @@ export default function Footer() {
             >
               YouTube
             </a>
+            {site.social.instagram && (
+              <a
+                href={site.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gold-light hover:text-gold"
+              >
+                Instagram
+              </a>
+            )}
           </div>
         </div>
 
@@ -59,8 +69,8 @@ export default function Footer() {
           <p className="font-display text-sm font-semibold tracking-wide uppercase text-gold">
             Quick Links
           </p>
-          <ul className="mt-3 space-y-2">
-            {site.nav.slice(1).map((item) => (
+          <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
+            {pages.slice(1).map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="text-sm text-cream/80 hover:text-gold">
                   {item.label}
