@@ -129,6 +129,7 @@ export const site = {
     {
       label: "Programs",
       children: [
+        { href: "/honor-guard", label: "Honor Guard" },
         { href: "/golf", label: "Golf Tournament" },
         { href: "/scholarship", label: "Scholarship" },
         { href: "/young-marines", label: "Young Marines" },
@@ -137,8 +138,9 @@ export const site = {
       ],
     },
     {
-      label: "Members",
+      label: "Resources",
       children: [
+        { href: "/faq", label: "FAQ" },
         { href: "/scuttlebutt", label: "Scuttlebutt Newsletter" },
         { href: "/welcome-packet", label: "Welcome Packet" },
         { href: "/uniforms", label: "Uniform Overview" },
@@ -230,7 +232,7 @@ export const programs = [
   },
   {
     title: "Military Colors & Funeral Honors",
-    href: "/about",
+    href: "/honor-guard",
     description:
       "Our Color Guard presents the colors at public events and ceremonies, and our Honor Guard provides military honors for fallen Marines and veterans.",
   },

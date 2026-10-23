@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageFade from "@/components/PageFade";
 import BackToTop from "@/components/BackToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 import { site } from "@/lib/site";
 
 const description =
@@ -45,6 +46,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       >
         Skip to content
       </a>
+      <ScrollProgress />
       <Header />
       <main id="main" tabIndex={-1} className="flex-1">
         <PageFade>{children}</PageFade>

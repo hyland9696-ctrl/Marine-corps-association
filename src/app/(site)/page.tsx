@@ -3,6 +3,7 @@ import { Button, Card, Container, Eyebrow, SectionHeading } from "@/components/u
 import Reveal from "@/components/Reveal";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import Countdown from "@/components/Countdown";
+import CountUp from "@/components/CountUp";
 import { listNewsletters } from "@/lib/files";
 import { golf, photos, programs, scholarship, site } from "@/lib/site";
 
@@ -22,7 +23,7 @@ const stats = [
 
 const features = [
   {
-    href: "/about",
+    href: "/honor-guard",
     photo: "/photos/honor-guard.jpg",
     eyebrow: "Honor Guard",
     title: "The last salute, done right",
@@ -98,7 +99,7 @@ export default function HomePage() {
               <Reveal key={s.label} delay={i * 80}>
                 <div className="border-l-2 border-gold pl-4">
                   <dd className="font-display text-4xl font-bold tabular-nums text-cream sm:text-5xl">
-                    {s.value}
+                    <CountUp value={s.value} />
                   </dd>
                   <dt className="mt-1 text-sm text-cream/70">{s.label}</dt>
                 </div>

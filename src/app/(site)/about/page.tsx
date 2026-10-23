@@ -70,6 +70,10 @@ export default function AboutPage() {
               <a href={`mailto:${site.colorGuard.email}`} className="underline">
                 {site.colorGuard.email}
               </a>
+              . To request honors for a service, see the{" "}
+              <Link href="/honor-guard" className="underline">
+                Honor Guard page
+              </Link>
               .
             </p>
 
