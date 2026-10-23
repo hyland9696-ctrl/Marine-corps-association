@@ -54,12 +54,12 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative isolate min-h-[88vh] overflow-hidden bg-navy text-cream">
         <HeroSlideshow photos={heroPhotos} />
-        <Container className="relative flex min-h-[88vh] flex-col justify-end pb-16 pt-28 sm:pb-24">
+        <Container className="relative flex min-h-[88vh] flex-col justify-end pb-12 pt-24 sm:pb-24 sm:pt-28">
           <Reveal>
             <p className="font-display text-sm font-semibold tracking-[0.3em] text-gold uppercase">
               {site.name} · {site.org}
             </p>
-            <h1 className="mt-4 max-w-4xl font-display text-5xl font-bold leading-[0.95] uppercase tracking-wide sm:text-7xl lg:text-8xl">
+            <h1 className="mt-4 max-w-4xl font-display text-[2.6rem] font-bold leading-[0.95] uppercase tracking-wide sm:text-7xl lg:text-8xl">
               Once a Marine,
               <br />
               <span className="text-gold">Always a Marine.</span>

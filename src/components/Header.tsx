@@ -79,10 +79,14 @@ export default function Header() {
             <span className="font-display text-lg font-bold text-gold">725</span>
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="font-display text-base font-semibold tracking-wide uppercase sm:text-lg">
+            <span className="font-display text-base font-semibold tracking-wide uppercase sm:hidden">
+              {site.shortName}
+            </span>
+            <span className="hidden font-display text-lg font-semibold tracking-wide uppercase sm:block">
               {site.name}
             </span>
-            <span className="text-xs text-gold-light">{site.org}</span>
+            <span className="text-xs text-gold-light sm:hidden">St. Charles County MCL</span>
+            <span className="hidden text-xs text-gold-light sm:block">{site.org}</span>
           </span>
         </Link>
 
