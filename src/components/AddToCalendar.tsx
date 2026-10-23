@@ -7,24 +7,10 @@
  * recurrence rule so the whole series lands on the member's calendar.
  */
 
-const RRULE = "FREQ=MONTHLY;BYDAY=3TH";
+import { MEETING_RRULE as RRULE, nextMeeting } from "@/lib/meeting";
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
-}
-
-// Next third-Thursday of the month at 7:00 PM local time.
-function nextMeeting(): Date {
-  const now = new Date();
-  const thirdThu = (year: number, month: number) => {
-    const d = new Date(year, month, 1, 19, 0, 0, 0);
-    // First Thursday (Thu = day 4), then add two weeks for the third.
-    d.setDate(1 + ((4 - d.getDay() + 7) % 7) + 14);
-    return d;
-  };
-  let d = thirdThu(now.getFullYear(), now.getMonth());
-  if (d.getTime() < now.getTime()) d = thirdThu(now.getFullYear(), now.getMonth() + 1);
-  return d;
 }
 
 // Floating local time, e.g. 20260107T190000

@@ -51,7 +51,7 @@ const annualEvents: { title: string; when: string; description: string; href?: s
 export default function EventsPage() {
   return (
     <>
-      <section className="bg-navy py-16 text-cream sm:py-24">
+      <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading eyebrow="Events" title="Meetings &amp; Gatherings" light />
         </Container>

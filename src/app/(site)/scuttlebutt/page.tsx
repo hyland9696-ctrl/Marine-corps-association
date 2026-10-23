@@ -19,7 +19,7 @@ export default function ScuttlebuttPage() {
 
   return (
     <>
-      <section className="bg-navy py-16 text-cream sm:py-24">
+      <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Newsletter"

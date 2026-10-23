@@ -59,6 +59,58 @@ body {
   animation: drift 14s linear infinite;
 }
 
+@keyframes kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 9s ease-out forwards;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 48s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Gold hairline that grows in beside section eyebrows. */
+.rule-grow::before {
+  content: "";
+  display: inline-block;
+  width: 2.5rem;
+  height: 2px;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+  background: var(--color-gold);
+}
+
+/* Subtle chevron texture for dark bands. */
+.bg-chevrons {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(201, 163, 73, 0.07) 0px,
+    rgba(201, 163, 73, 0.07) 1px,
+    transparent 1px,
+    transparent 28px
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

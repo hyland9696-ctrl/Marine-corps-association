@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-navy py-16 text-cream sm:py-24">
+      <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="About Us"
@@ -61,7 +61,8 @@ export default function AboutPage() {
               our Honor Guard provides military honors for fallen Marines and veterans.
             </p>
             <p className="mt-4 text-navy/80 leading-relaxed">
-              <strong>We are looking for a few good men and women</strong> to join the Color
+              <strong>We are looking for a few good men and women</strong>{" "}
+              to join the Color
               Guard and/or the Honor Guard. Many of the current members are no longer able to
               participate. If you&rsquo;re retired or able to get a day off once in a while, we
               could use your help; many of the events are on weekends or holidays. Contact Color
@@ -99,6 +100,33 @@ export default function AboutPage() {
               veterans, and our community through charitable work, patriotic service, and
               fellowship.
             </blockquote>
+
+            <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+              Detachment #725 Officers
+            </h2>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {site.officers.map((o, i) => (
+                <li key={o.role}>
+                  <Reveal delay={(i % 2) * 60}>
+                    <div className="flex items-center gap-4 rounded-sm border border-navy/10 bg-white px-4 py-3 shadow-sm">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-gold bg-navy font-display text-sm font-bold text-gold">
+                        {o.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </span>
+                      <div>
+                        <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-scarlet">
+                          {o.role}
+                        </p>
+                        <p className="font-semibold text-navy">{o.name}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
           </Reveal>
 
           <Reveal delay={150}>

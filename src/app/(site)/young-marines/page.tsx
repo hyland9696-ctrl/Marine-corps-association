@@ -26,7 +26,7 @@ const pillars = [
 export default function YoungMarinesPage() {
   return (
     <>
-      <section className="bg-navy py-16 text-cream sm:py-24">
+      <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Youth Program"

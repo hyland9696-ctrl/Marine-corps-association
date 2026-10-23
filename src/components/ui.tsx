@@ -7,7 +7,7 @@ export function Container({ className = "", children }: { className?: string; ch
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-display text-sm font-semibold tracking-[0.2em] text-scarlet uppercase">
+    <p className="rule-grow font-display text-sm font-semibold tracking-[0.2em] text-scarlet uppercase">
       {children}
     </p>
   );
@@ -28,7 +28,7 @@ export function SectionHeading({
     <div className="max-w-2xl">
       {eyebrow && (
         <p
-          className={`font-display text-sm font-semibold tracking-[0.2em] uppercase ${
+          className={`rule-grow font-display text-sm font-semibold tracking-[0.2em] uppercase ${
             light ? "text-gold" : "text-scarlet"
           }`}
         >

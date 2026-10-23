@@ -14,7 +14,7 @@ const FOCUS_URL = "https://www.focusmarines.org";
 export default function FocusMarinesPage() {
   return (
     <>
-      <section className="bg-navy py-16 text-cream sm:py-24">
+      <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Partner"
