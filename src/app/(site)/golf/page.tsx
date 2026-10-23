@@ -18,6 +18,23 @@ const details = [
   ["Food & drink", golf.food],
 ];
 
+const eventJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: `${site.shortName} Annual Fundraising Golf Tournament`,
+  startDate: "2026-09-19T12:15:00-05:00",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: golf.course,
+    address: { "@type": "PostalAddress", streetAddress: "158 Bear Creek Dr", addressLocality: "Wentzville", addressRegion: "MO", postalCode: "63385", addressCountry: "US" },
+  },
+  organizer: { "@type": "Organization", name: `${site.name}, ${site.org}`, url: site.url },
+  description: `${golf.format}. ${golf.teamFee}. Benefits ${golf.benefits}.`,
+  offers: { "@type": "Offer", price: "480", priceCurrency: "USD", availability: golf.golfersSoldOut ? "https://schema.org/SoldOut" : "https://schema.org/InStock", url: `${site.url}/golf/` },
+};
+
 export default function GolfPage() {
   const hasFlyer = publicFileExists(golf.flyerFile);
   const registerHref = golf.registerUrl || "/contact";
@@ -25,6 +42,7 @@ export default function GolfPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }} />
       <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading

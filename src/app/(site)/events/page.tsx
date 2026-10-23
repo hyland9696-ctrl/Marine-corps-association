@@ -4,6 +4,7 @@ import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import AddToCalendar from "@/components/AddToCalendar";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import BirthdayCountdown from "@/components/BirthdayCountdown";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -54,6 +55,23 @@ export default function EventsPage() {
       <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading eyebrow="Events" title="Meetings &amp; Gatherings" light />
+        </Container>
+      </section>
+
+      <section className="bg-chevrons bg-navy-light py-10 text-cream">
+        <Container className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <Reveal>
+            <p className="font-display text-xs font-semibold tracking-[0.2em] text-gold uppercase">
+              Marine Corps Birthday
+            </p>
+            <BirthdayCountdown />
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="max-w-sm text-sm text-cream/75">
+              Founded at Tun Tavern, Philadelphia, November 10, 1775. The detachment marks it every
+              year with the Birthday Ball.
+            </p>
+          </Reveal>
         </Container>
       </section>
 

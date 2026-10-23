@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import PageFade from "@/components/PageFade";
 import BackToTop from "@/components/BackToTop";
 import ScrollProgress from "@/components/ScrollProgress";
+import MobileCta from "@/components/MobileCta";
 import { site } from "@/lib/site";
 
 const description =
@@ -53,6 +54,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       </main>
       <Footer />
       <BackToTop />
+      <MobileCta />
     </>
   );
 }

@@ -42,7 +42,30 @@ export default function GetInvolvedPage() {
       <section className="bg-cream py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+            <Reveal>
+              <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+                Why Bother?
+              </h2>
+              <p className="mt-4 max-w-prose leading-relaxed text-navy/80">
+                Straight answer: because the people who get it are here. Nobody asks you to
+                explain. You get a formation that shows up, work that matters, and a reason to put
+                the cover back on a few times a year.
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                {[
+                  ["Your people", "Marines and Docs from every era, one room, once a month. Bring your family."],
+                  ["Real work", "Honors for the fallen, toys for kids, scholarships, a youth unit we built from scratch."],
+                  ["Your terms", "No minimum hours. Show up when you can; the door is open when you can't."],
+                ].map(([t, d]) => (
+                  <div key={t} className="border-l-2 border-gold pl-4">
+                    <p className="font-display text-base font-semibold uppercase tracking-wide text-navy">{t}</p>
+                    <p className="mt-1 text-sm text-navy/70">{d}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
               Who Can Join
             </h2>
             <div className="mt-4 grid gap-6 sm:grid-cols-2">

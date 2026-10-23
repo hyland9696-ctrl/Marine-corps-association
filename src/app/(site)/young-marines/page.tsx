@@ -81,8 +81,14 @@ export default function YoungMarinesPage() {
                 enrollment, meeting times, and how the Young Marines program can support your
                 family.
               </p>
-              <div className="mt-6">
+              <p className="mt-3 text-sm text-navy/70">
+                The national program is open to youth from age 8 through high school graduation.
+              </p>
+              <div className="mt-6 flex flex-col gap-3">
                 <Button href="/contact">Contact Us</Button>
+                <Button href="https://youngmarines.org" variant="outline-dark" external>
+                  youngmarines.org
+                </Button>
               </div>
             </Card>
           </Reveal>

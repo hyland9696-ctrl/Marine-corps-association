@@ -232,6 +232,24 @@ export default function MarketingHq() {
               title="Social Banner"
               desc="1200×630 image — for Facebook/link previews and posts."
             />
+            <AssetCard
+              href="/brand/qr-join.svg"
+              file="qr-join.svg"
+              title="QR: Join page"
+              desc="Scan-to-join code for BBQ tables, flyers, and the recruiting poster."
+            />
+            <AssetCard
+              href="/brand/qr-golf.svg"
+              file="qr-golf.svg"
+              title="QR: Golf Tournament"
+              desc="Put it on sponsor packets and the tournament flyer."
+            />
+            <AssetCard
+              href="/brand/qr-site.svg"
+              file="qr-site.svg"
+              title="QR: Home page"
+              desc="General-purpose code for business cards and banners."
+            />
           </div>
           <p className="mt-4 text-xs text-cream/70">
             Want photos, flyers, or a print-ready logo added here? Drop the files in and I&rsquo;ll

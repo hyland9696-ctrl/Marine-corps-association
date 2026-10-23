@@ -18,6 +18,8 @@ const title = "St. Charles County Detachment 725 | Marine Corps League";
 const description =
   "St. Charles County Detachment 725 of the Marine Corps League, serving Marines, FMF Corpsmen, veterans, and the St. Charles County, Missouri community through fellowship, charitable work, and patriotic service.";
 
+export const viewport = { themeColor: "#0a1220" };
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
