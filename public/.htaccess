@@ -15,8 +15,8 @@
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # Force www
-  RewriteCond %{HTTP_HOST} ^stcharlesmarines\.org$ [NC]
-  RewriteRule ^ https://www.stcharlesmarines.org%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP_HOST} ^stcharlesmarine\.com$ [NC]
+  RewriteRule ^ https://www.stcharlesmarine.com%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 # ----------------------------------------------------------------------------

@@ -65,7 +65,7 @@ export default function AddToCalendar({
       "PRODID:-//Detachment 725//Meetings//EN",
       "CALSCALE:GREGORIAN",
       "BEGIN:VEVENT",
-      `UID:monthly-meeting-${fmtLocal(start)}@stcharlesmarines.org`,
+      `UID:monthly-meeting-${fmtLocal(start)}@stcharlesmarine.com`,
       `DTSTAMP:${fmtUtc(new Date())}`,
       `DTSTART:${fmtLocal(start)}`,
       `DTEND:${fmtLocal(end)}`,

@@ -93,6 +93,39 @@ export default function GolfPage() {
 
             <Reveal>
               <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
+                Sponsorship Opportunities
+              </h2>
+              <p className="mt-3 text-sm text-navy/70">
+                Every sponsor gets a Marine from the detachment as a liaison for sign ordering and
+                anything else before the tournament.
+              </p>
+              <ul className="mt-4 divide-y divide-navy/10 rounded-sm border border-navy/10 bg-white">
+                {golf.sponsorships.map((t) => (
+                  <li
+                    key={t.name}
+                    className={`flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-baseline sm:gap-6 ${
+                      t.soldOut ? "opacity-60" : ""
+                    }`}
+                  >
+                    <div className="flex-1">
+                      <p className="font-display text-base font-semibold uppercase tracking-wide text-navy">
+                        {t.name}
+                        {t.soldOut && (
+                          <span className="ml-3 rounded-sm bg-scarlet px-2 py-0.5 font-display text-[0.65rem] font-semibold tracking-[0.15em] text-cream uppercase">
+                            Sold out
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-1 text-sm text-navy/70">{t.perk}</p>
+                    </div>
+                    <span className="font-display text-xl font-bold tabular-nums text-navy">{t.price}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal>
+              <h2 className="mt-12 font-display text-2xl font-semibold uppercase tracking-wide text-navy">
                 Golfers and Sponsors, Please Read
               </h2>
               <p className="mt-4 max-w-prose leading-relaxed text-navy/80">

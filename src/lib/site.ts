@@ -11,7 +11,7 @@ export const site = {
   // Production URL — used for canonical links, sitemap, robots, and social
   // share images. Defaults to the live domain; NEXT_PUBLIC_SITE_URL can
   // override it (e.g. for preview/staging deployments).
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.stcharlesmarines.org").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.stcharlesmarine.com").replace(/\/$/, ""),
   meeting: {
     schedule: "Third Thursday of every month, 7:00 PM (1900)",
     // Shown on the Home and Events pages so members used to the old night see it.
@@ -92,8 +92,8 @@ export const site = {
   // NEXT_PUBLIC_FORMSPREE_ENDPOINT. While this is empty the form still shows,
   // but submitting points people to email/phone instead of failing silently.
   formEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? "",
-  // Online donations. Paste the detachment's giving link here (Zeffy is free
-  // for nonprofits; PayPal, Venmo, or Givebutter also work) or set
+  // Online donations: the old site's PayPal "Scholarship Fund Donation / Open
+  // Donation" button. Paste its permanent button link here or set
   // NEXT_PUBLIC_DONATE_URL. While empty, the Donate buttons invite people to
   // give by mail/phone instead of linking nowhere.
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL ?? "",
@@ -142,7 +142,6 @@ export const site = {
         { href: "/scuttlebutt", label: "Scuttlebutt Newsletter" },
         { href: "/welcome-packet", label: "Welcome Packet" },
         { href: "/uniforms", label: "Uniform Overview" },
-        { href: "/auxiliary", label: "Auxiliary" },
       ],
     },
     { href: "/gallery", label: "Gallery" },
@@ -179,6 +178,17 @@ export const golf = {
   prizesNote: "Must be present to win.",
   food: "Lunch before and dinner after. Water, soft drinks, and adult beverages provided.",
   holeSponsor: "$250",
+  // Sponsorship tiers from the old site's Sponsor Registration page. Mark a
+  // tier soldOut when it's gone for the year; reset after the tournament.
+  sponsorships: [
+    { name: "Corporate Sponsor", price: "Contact us", perk: "Title sponsor of the tournament. World Wide Technology holds this for 2026.", soldOut: true },
+    { name: "Dinner Sponsor", price: "$2,000", perk: "Banner atop the pavilion at the course entry.", soldOut: true },
+    { name: "Lunch Sponsor", price: "$600", perk: "Signage on and near the lunch tent.", soldOut: true },
+    { name: "Beverage Cart Sponsor", price: "$300", perk: "Banner on the beverage cart displaying your company information.", soldOut: true },
+    { name: "Longest Drive Sponsor", price: "$300", perk: "Men's and women's longest drive sign displaying your company information.", soldOut: true },
+    { name: "Closest to the Pin Sponsor", price: "$300", perk: "Men's and women's closest-to-the-pin sign displayed with your company's information.", soldOut: false },
+    { name: "Hole Sponsor", price: "$250", perk: "Your sign displayed at a hole, sourced through our vendor to course guidelines.", soldOut: false },
+  ],
   holeSponsorNote:
     "Hole sponsors have their sign displayed at a hole. The detachment sources the signs through our vendor to ensure quality and adherence to course guidelines. A Marine from the detachment will reach out to act as your liaison for sign ordering and anything else you need before the tournament.",
   titleSponsor: "World Wide Technology",

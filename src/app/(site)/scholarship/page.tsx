@@ -91,6 +91,29 @@ export default function ScholarshipPage() {
             </Reveal>
           </div>
 
+          <div className="space-y-6">
+          <Reveal delay={220}>
+            <Card>
+              <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-navy">
+                Scholarship Fund Donation
+              </h3>
+              <p className="mt-3 text-sm text-navy/70">
+                Give any amount to the scholarship fund. Every dollar goes to the next round of
+                awards.
+              </p>
+              <div className="mt-5">
+                {site.donateUrl ? (
+                  <Button href={site.donateUrl} variant="primary" external>
+                    Donate now
+                  </Button>
+                ) : (
+                  <Button href="/support" variant="primary">
+                    Ways to give
+                  </Button>
+                )}
+              </div>
+            </Card>
+          </Reveal>
           <Reveal delay={150}>
             <Card>
               <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-scarlet">
@@ -103,6 +126,7 @@ export default function ScholarshipPage() {
               </p>
             </Card>
           </Reveal>
+          </div>
         </Container>
       </section>
     </>
