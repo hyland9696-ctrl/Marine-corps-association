@@ -42,10 +42,11 @@ export default function YoungMarinesPage() {
           <div className="lg:col-span-2">
             <Reveal>
               <p className="text-navy/80 leading-relaxed">
-                The St. Charles County Young Marines was founded by three members of Detachment
-                725 and one civilian volunteer. What began as a local effort has grown into the
-                largest Young Marines unit in Missouri and one of the top-ranked units in the
-                Midwest Regiment.
+                The St. Charles County Young Marines was chartered on March 3, 2021, founded by
+                three members of Detachment 725 and one civilian volunteer, and is backed by
+                Marine Corps League Detachments 725, 184, 183, and 707. What began as a local
+                effort has grown into the largest Young Marines unit in Missouri and one of the
+                top-ranked units in the Midwest Regiment.
               </p>
               <p className="mt-4 text-navy/80 leading-relaxed">
                 The Young Marines is a national nonprofit youth education program for boys and
