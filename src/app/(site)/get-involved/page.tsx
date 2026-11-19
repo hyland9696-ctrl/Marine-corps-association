@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { downloads, site } from "@/lib/site";
 import { publicFileExists } from "@/lib/files";
 
 export const metadata: Metadata = {
-  title: "Get Involved",
-  description: "How to join St. Charles County Detachment 725 of the Marine Corps League.",
+  title: "Join the Marine Corps League",
+  description:
+    "How to join Marine Corps League Detachment 725 in St. Charles County, MO: who is eligible, $35 annual dues, the application, and what to bring to a meeting.",
 };
 
 const steps = [
@@ -202,6 +204,12 @@ export default function GetInvolvedPage() {
               </figure>
             </Reveal>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Join Marine Corps League Detachment 725, St. Charles County" />
         </Container>
       </section>
     </>

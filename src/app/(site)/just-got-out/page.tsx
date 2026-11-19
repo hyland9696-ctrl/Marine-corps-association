@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, Card, Container } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Just Got Out of the Marine Corps?",
+  title: "Just Got Out? Start Here",
   description:
-    "Recently separated Marine in St. Charles County, O'Fallon, St. Peters, or the St. Louis area? Detachment 725 is Marines and FMF Corpsmen who still show up for each other. No minimum hours. Bring your DD-214.",
+    "Recently separated Marine near St. Charles County or St. Louis? Detachment 725 is Marines who still show up for each other. No minimum hours. Bring your DD-214.",
   alternates: { canonical: "/just-got-out/" },
   keywords: [
     "Marine veterans St. Charles County",
@@ -172,6 +173,12 @@ export default function JustGotOutPage() {
               </Card>
             </Reveal>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Just got out of the Marine Corps? There's a formation in St. Charles County." />
         </Container>
       </section>
     </>

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Honor Guard",
+  title: "Honor Guard, St. Charles County",
   description:
-    "Detachment 725's certified Honor Guard renders military honors for fallen Marines and veterans, and our Color Guard presents the colors at ceremonies across St. Charles County. Request honors or volunteer.",
+    "Detachment 725 Honor Guard and Color Guard render military funeral honors and present the colors across St. Charles County, MO. Request honors or volunteer.",
   alternates: { canonical: "/honor-guard/" },
 };
 
@@ -116,6 +117,12 @@ export default function HonorGuardPage() {
               </figure>
             </Reveal>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Detachment 725 Honor Guard: military honors in St. Charles County" />
         </Container>
       </section>
     </>

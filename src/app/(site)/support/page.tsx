@@ -5,7 +5,8 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Support Us",
-  description: "Ways to support St. Charles County Detachment 725 and the programs it runs.",
+  description:
+    "Support Marine Corps League Detachment 725: donate toys, sponsor or play in the golf tournament, give to the scholarship fund, or help fund military honors.",
 };
 
 const ways = [

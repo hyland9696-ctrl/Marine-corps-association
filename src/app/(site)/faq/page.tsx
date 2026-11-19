@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { golf, scholarship, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -244,6 +245,12 @@ export default function FaqPage() {
               </div>
             </Card>
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Marine Corps League Detachment 725: FAQ" />
         </Container>
       </section>
     </>

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { listNewsletters } from "@/lib/files";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Scuttlebutt Newsletter",
+  title: "The Scuttlebutt Newsletter",
   description:
     "The Scuttlebutt, the monthly newsletter of St. Charles County Detachment 725, Marine Corps League. Read the latest issue and browse the archive.",
   alternates: { canonical: "/scuttlebutt/" },
@@ -141,6 +142,12 @@ export default function ScuttlebuttPage() {
               </Card>
             </Reveal>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="The Scuttlebutt: Detachment 725 newsletter" />
         </Container>
       </section>
     </>

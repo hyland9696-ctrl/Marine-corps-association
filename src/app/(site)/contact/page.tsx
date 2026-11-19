@@ -6,7 +6,8 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact information for St. Charles County Detachment 725, Marine Corps League.",
+  description:
+    "Contact Marine Corps League Detachment 725 in O'Fallon, MO: email the Commandant, reach the Paymaster, see the officer roster, or find our meeting.",
 };
 
 export default function ContactPage() {

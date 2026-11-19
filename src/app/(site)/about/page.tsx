@@ -5,9 +5,9 @@ import Reveal from "@/components/Reveal";
 import { photos, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Us",
   description:
-    "About St. Charles County Detachment 725 of the Marine Corps League and its leadership.",
+    "Marine Corps League Detachment 725: Marines and FMF Corpsmen in O'Fallon and St. Peters, MO, serving veterans and St. Charles County since 1937.",
 };
 
 export default function AboutPage() {

@@ -8,7 +8,7 @@ import { downloads, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Welcome Packet",
   description:
-    "New-member welcome packet for St. Charles County Detachment 725: our mission, what we do, detachment staff positions, the Devil Dogs, Color Guard and Honor Guard, and meetings.",
+    "New-member welcome packet for Detachment 725: our mission, what we do, officer positions, the Devil Dogs, Color Guard and Honor Guard, and meeting details.",
   alternates: { canonical: "/welcome-packet/" },
 };
 

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { publicFileExists } from "@/lib/files";
 import { golf, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Golf Tournament",
-  description: `Detachment 725's annual fundraising golf tournament: ${golf.date} at ${golf.course}, Wentzville. Four-person scramble benefiting scholarships, Focus Marines, Toys for Tots, and the Young Marines.`,
+  title: "Golf Tournament 2026, Wentzville MO",
+  description: `Marine Corps League Detachment 725 golf tournament, ${golf.date}, ${golf.course}, Wentzville, MO. Four-person scramble; proceeds fund scholarships.`,
   alternates: { canonical: "/golf/" },
 };
 
@@ -200,6 +201,12 @@ export default function GolfPage() {
               </p>
             </Card>
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="MCL Detachment 725 Golf Tournament, Sept. 19, 2026" />
         </Container>
       </section>
     </>

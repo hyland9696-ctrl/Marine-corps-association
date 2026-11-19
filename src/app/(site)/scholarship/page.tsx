@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import { publicFileExists } from "@/lib/files";
 import { golf, scholarship, site } from "@/lib/site";
 
@@ -127,6 +128,12 @@ export default function ScholarshipPage() {
             </Card>
           </Reveal>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Detachment 725 $1,200 Scholarship" />
         </Container>
       </section>
     </>

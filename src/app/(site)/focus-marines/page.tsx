@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Focus Marines",
   description:
-    "Detachment 725 supports the Focus Marines Foundation, a St. Louis-area nonprofit that runs a free, week-long program helping veterans transition to civilian life.",
+    "Detachment 725 supports the Focus Marines Foundation, a free week-long program near St. Louis that helps post-9/11 Marines and veterans find purpose after servi",
   alternates: { canonical: "/focus-marines/" },
 };
 

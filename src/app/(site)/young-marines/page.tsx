@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 
 export const metadata: Metadata = {
-  title: "Young Marines",
+  title: "Young Marines, St. Charles County",
   description:
-    "The St. Charles County Young Marines is a youth leadership program founded by members of Detachment 725.",
+    "The St. Charles County Young Marines, chartered 2021 by Detachment 725, is Missouri's largest unit: leadership, drug-free living, and citizenship, ages 8 to 18.",
 };
 
 const pillars = [
@@ -92,6 +93,12 @@ export default function YoungMarinesPage() {
               </div>
             </Card>
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="St. Charles County Young Marines" />
         </Container>
       </section>
     </>

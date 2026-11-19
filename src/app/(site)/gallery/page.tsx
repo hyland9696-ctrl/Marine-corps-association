@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import { photos, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Gallery",
+  title: "Photo Gallery",
   description:
     "Photos from St. Charles County Detachment 725 — Toys for Tots, funeral honors, the Marine Corps Birthday Ball, and life in the detachment.",
 };

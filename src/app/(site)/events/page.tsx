@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import AddToCalendar from "@/components/AddToCalendar";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import BirthdayCountdown from "@/components/BirthdayCountdown";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Events",
-  description: "Meeting schedule and annual events for St. Charles County Detachment 725.",
+  title: "Meetings & Events, O'Fallon MO",
+  description:
+    "Marine Corps League Detachment 725 meets the third Thursday monthly at O'Fallon Elks Lodge, MO. Golf tournament, BBQ sales, Birthday Ball, Toys for Tots.",
 };
 
 const annualEvents: { title: string; when: string; description: string; href?: string; cta?: string }[] = [
@@ -176,6 +178,12 @@ export default function EventsPage() {
               </div>
             </Card>
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Marine Corps League Detachment 725: meetings and events" />
         </Container>
       </section>
     </>

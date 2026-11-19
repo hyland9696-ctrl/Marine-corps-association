@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import ShareBar from "@/components/ShareBar";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { bbqRecent, bbqUpcoming, site } from "@/lib/site";
 
@@ -117,6 +118,12 @@ export default function BbqPage() {
               </div>
             </Card>
           </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-t border-navy/10 bg-white py-8">
+        <Container>
+          <ShareBar title="Detachment 725 BBQ and food sales" />
         </Container>
       </section>
     </>

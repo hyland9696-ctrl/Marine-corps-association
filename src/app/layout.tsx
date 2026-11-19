@@ -16,7 +16,7 @@ const inter = Inter({
 
 const title = "St. Charles County Detachment 725 | Marine Corps League";
 const description =
-  "St. Charles County Detachment 725 of the Marine Corps League, serving Marines, FMF Corpsmen, veterans, and the St. Charles County, Missouri community through fellowship, charitable work, and patriotic service.";
+  "Marine Corps League Detachment 725 in St. Charles County, MO: Marines and FMF Corpsmen serving veterans and the community. Meets third Thursday, O'Fallon.";
 
 export const viewport = { themeColor: "#0a1220" };
 
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: title,
-    template: "%s | Detachment 725 Marine Corps League",
+    template: "%s | MCL Detachment 725",
   },
   description,
   applicationName: `${site.name}, ${site.org}`,
@@ -40,18 +40,15 @@ export const metadata: Metadata = {
     "Marine Corps Birthday Ball",
     "FMF Corpsmen",
   ],
+  // Title, description, and image fall back to each page's own metadata and
+  // its opengraph-image.tsx, so every page gets a distinct share card.
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: site.url,
     siteName: `${site.name}, ${site.org}`,
-    title,
-    description,
   },
   twitter: {
     card: "summary_large_image",
-    title,
-    description,
   },
   robots: {
     index: true,
