@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import ShareBar from "@/components/ShareBar";
 import { downloads, site } from "@/lib/site";
 import { publicFileExists } from "@/lib/files";
@@ -194,12 +195,11 @@ export default function GetInvolvedPage() {
             </Reveal>
             <Reveal delay={220}>
               <figure className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Photo
+                  sizes="(min-width: 1024px) 400px, 100vw"
                   src="/photos/recruiting-poster.jpg"
                   alt={`I want you for the Marine Corps League. For information contact ${site.recruiting.role} ${site.recruiting.name}, ${site.recruiting.phone}. Once a Marine, always a Marine.`}
                   className="w-full"
-                  loading="lazy"
                 />
               </figure>
             </Reveal>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import { photos, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,11 +32,10 @@ export default function GalleryPage() {
                 <Reveal key={photo.src} delay={(i % 3) * 80}>
                   <figure className="group overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <div className="aspect-[4/3] overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Photo
                         src={photo.src}
                         alt={photo.caption}
-                        loading="lazy"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>

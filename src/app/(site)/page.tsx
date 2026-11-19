@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button, Card, Container, Eyebrow, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import Photo, { photoMeta, photoSrcSet } from "@/components/Photo";
+import { preload } from "react-dom";
 import Countdown from "@/components/Countdown";
 import CountUp from "@/components/CountUp";
 import { listNewsletters } from "@/lib/files";
@@ -12,7 +14,7 @@ const heroPhotos = [
   "/photos/celebration-of-lights.jpg",
   "/photos/camaraderie.jpg",
   "/photos/toys-for-tots.jpg",
-];
+].map(photoMeta);
 
 const stats = [
   { value: "1775", label: "Marine Corps founded" },
@@ -46,6 +48,8 @@ const features = [
 ];
 
 export default function HomePage() {
+  // Hint the browser about the hero's first frame before the JS bundle runs (LCP).
+  preload(heroPhotos[0].webp, { as: "image", type: "image/webp", imageSrcSet: photoSrcSet(heroPhotos[0]), imageSizes: "100vw", fetchPriority: "high" });
   const latest = listNewsletters()[0];
   const marquee = [...photos, ...photos];
 
@@ -94,18 +98,20 @@ export default function HomePage() {
       {/* Stat band */}
       <section className="bg-chevrons bg-navy-light py-10 text-cream">
         <Container>
-          <dl className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <ul className="grid grid-cols-2 gap-8 md:grid-cols-4" aria-label="Detachment by the numbers">
             {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div className="border-l-2 border-gold pl-4">
-                  <dd className="font-display text-4xl font-bold tabular-nums text-cream sm:text-5xl">
-                    <CountUp value={s.value} />
-                  </dd>
-                  <dt className="mt-1 text-sm text-cream/70">{s.label}</dt>
-                </div>
-              </Reveal>
+              <li key={s.label}>
+                <Reveal delay={i * 80}>
+                  <div className="border-l-2 border-gold pl-4">
+                    <p className="font-display text-4xl font-bold tabular-nums text-cream sm:text-5xl">
+                      <CountUp value={s.value} />
+                    </p>
+                    <p className="mt-1 text-sm text-cream/70">{s.label}</p>
+                  </div>
+                </Reveal>
+              </li>
             ))}
-          </dl>
+          </ul>
         </Container>
       </section>
 
@@ -145,11 +151,10 @@ export default function HomePage() {
                   className="group block h-full overflow-hidden rounded-sm bg-navy text-cream shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Photo
                       src={f.photo}
                       alt=""
-                      loading="lazy"
+                      sizes="(min-width: 1024px) 33vw, 100vw"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/30 to-transparent" />
@@ -177,12 +182,11 @@ export default function HomePage() {
       <section className="overflow-hidden bg-navy py-6" aria-label="Photos from the detachment">
         <div className="animate-marquee flex w-max gap-4">
           {marquee.map((p, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Photo
               key={`${p.src}-${i}`}
               src={p.src}
               alt={i < photos.length ? p.caption : ""}
-              loading="lazy"
+              sizes="450px"
               className="h-40 w-auto rounded-sm border border-gold/20 object-cover sm:h-56"
             />
           ))}

@@ -2,7 +2,7 @@
  * "The Scuttlebutt" — Detachment 725 monthly newsletter email template.
  * Table-based + inline styles so it renders in Gmail/Outlook/Apple Mail.
  * {{NAME}} / {{UNSUBSCRIBE}} / {{PHOTOS}} are filled by the Apps Script send
- * engine (see /newsletter/Code.gs).
+ * engine (see newsletter-engine/Code.gs).
  *
  * Modeled on the detachment's printed Scuttlebutt: editor's column, upcoming
  * events, meeting reminders, officer roster, and membership/dues — with a

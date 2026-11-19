@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, Card, Container } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import ShareBar from "@/components/ShareBar";
 import { site } from "@/lib/site";
 
@@ -47,8 +48,7 @@ export default function JustGotOutPage() {
   return (
     <>
       <section className="relative isolate overflow-hidden bg-navy text-cream">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/photos/camaraderie.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+        <Photo src="/photos/camaraderie.jpg" alt="" priority aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" />
         <Container className="relative py-24 sm:py-32">
           <Reveal>

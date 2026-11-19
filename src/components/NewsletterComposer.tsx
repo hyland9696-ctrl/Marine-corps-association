@@ -353,7 +353,7 @@ export default function NewsletterComposer() {
           {!endpoint ? (
             <p className="mt-2 text-sm text-cream/80">
               The send engine isn&rsquo;t connected yet. Deploy the Google Apps Script (see
-              newsletter/README) and paste its Web App URL into <code>newsletterEndpoint</code>.
+              newsletter-engine/README) and paste its Web App URL into <code>newsletterEndpoint</code>.
               Until then, use the copy buttons below and the sheet&rsquo;s menu.
             </p>
           ) : (

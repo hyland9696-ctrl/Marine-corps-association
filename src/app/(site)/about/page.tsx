@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import { photos, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -53,8 +54,7 @@ export default function AboutPage() {
               Certified Honor Guard
             </h2>
             <figure className="mt-4 overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/photos/honor-guard.jpg" alt="Detachment 725 Honor Guard presenting the colors" className="w-full" loading="lazy" />
+              <Photo src="/photos/honor-guard.jpg" alt="Detachment 725 Honor Guard presenting the colors" sizes="(min-width: 1024px) 60vw, 100vw" className="w-full" />
             </figure>
             <p className="mt-4 text-navy/80 leading-relaxed">
               Our Color Guard presents the colors at public events, parades, and ceremonies, and
@@ -86,8 +86,7 @@ export default function AboutPage() {
                 .map((ph) => (
                   <figure key={ph.src} className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
                     <div className="aspect-[4/3] overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={ph.src} alt={ph.caption} className="h-full w-full object-cover" loading="lazy" />
+                      <Photo src={ph.src} alt={ph.caption} sizes="(min-width: 640px) 33vw, 100vw" className="h-full w-full object-cover" />
                     </div>
                     <figcaption className="px-3 py-2 text-xs text-navy/70">{ph.caption}</figcaption>
                   </figure>

@@ -98,7 +98,7 @@ export const site = {
   // give by mail/phone instead of linking nowhere.
   donateUrl: process.env.NEXT_PUBLIC_DONATE_URL ?? "",
   // Newsletter signup. Points at the detachment's Google Apps Script web-app
-  // URL (the free "send engine" — see /newsletter/README). The public signup
+  // URL (the free "send engine" — see newsletter-engine/README). The public signup
   // form POSTs new subscribers here; while empty, the form invites people to
   // email instead. Set NEXT_PUBLIC_NEWSLETTER_ENDPOINT or paste it below.
   newsletterEndpoint: process.env.NEXT_PUBLIC_NEWSLETTER_ENDPOINT ?? "",

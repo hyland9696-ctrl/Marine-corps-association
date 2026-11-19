@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import ShareBar from "@/components/ShareBar";
 import { publicFileExists } from "@/lib/files";
 import { golf, site } from "@/lib/site";
@@ -168,8 +169,7 @@ export default function GolfPage() {
                 Tournament Flyer
               </h2>
               <figure className="mt-4 max-w-md overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={golf.flyerImage} alt={`${golf.date} tournament flyer`} className="w-full" />
+                <Photo src={golf.flyerImage} alt={`${golf.date} tournament flyer`} sizes="(min-width: 640px) 448px, 100vw" className="w-full" />
               </figure>
               {hasFlyer && (
                 <div className="mt-4">

@@ -312,12 +312,12 @@ export default function MarketingHq() {
             <ol className="mt-2 list-decimal space-y-1 pl-5">
               <li>
                 <strong>One-time setup:</strong> create a Google Sheet, then add the send script.{" "}
-                <a href="/newsletter/README.md" target="_blank" rel="noopener noreferrer" className="text-gold underline">
+                <a href="https://github.com/hyland9696-ctrl/Marine-corps-association/blob/main/newsletter-engine/README.md" target="_blank" rel="noopener noreferrer" className="text-gold underline">
                   Full instructions
                 </a>{" "}
                 ·{" "}
-                <a href="/newsletter/Code.gs" download className="text-gold underline">
-                  Download the script (Code.gs)
+                <a href="https://github.com/hyland9696-ctrl/Marine-corps-association/blob/main/newsletter-engine/Code.gs" target="_blank" rel="noopener noreferrer" className="text-gold underline">
+                  Open the script (Code.gs)
                 </a>{" "}
                 ·{" "}
                 <a href="https://sheets.google.com" target="_blank" rel="noopener noreferrer" className="text-gold underline">

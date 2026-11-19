@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Card, Container, SectionHeading } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import ShareBar from "@/components/ShareBar";
 import { site } from "@/lib/site";
 
@@ -15,10 +16,10 @@ export default function HonorGuardPage() {
   return (
     <>
       <section className="relative isolate overflow-hidden bg-navy text-cream">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Photo
           src="/photos/honor-guard.jpg"
           alt=""
+          priority
           className="absolute inset-0 h-full w-full object-cover opacity-40"
           aria-hidden="true"
         />
@@ -109,8 +110,7 @@ export default function HonorGuardPage() {
             </Reveal>
             <Reveal delay={220}>
               <figure className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-sm">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/photos/honor-guard.jpg" alt="Detachment 725 Honor Guard presenting the colors" className="w-full" loading="lazy" />
+                <Photo src="/photos/honor-guard.jpg" alt="Detachment 725 Honor Guard presenting the colors" sizes="(min-width: 1024px) 60vw, 100vw" className="w-full" />
                 <figcaption className="px-4 py-3 text-xs text-navy/70">
                   The Honor Guard presenting the colors at a detachment event.
                 </figcaption>

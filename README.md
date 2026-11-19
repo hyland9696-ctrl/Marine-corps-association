@@ -19,10 +19,11 @@ Site copy and contact details live in `src/lib/site.ts`. Update that file to cha
 
 ## Private HQ page
 
-The officers' page lives at an unlisted URL (`site.hqPath` in `src/lib/site.ts`; change it to rotate). It is excluded from the sitemap and marked noindex. **Add a real password** once on GoDaddy: cPanel → Files → Directory Privacy → the `hq-725-x9k4m` folder → "Password protect this directory" → add a user. cPanel writes the auth lines into that folder's `.htaccess`. The newsletter send itself is protected separately by the send secret (see `public/newsletter/README.md`).
+The officers' page lives at an unlisted URL (`site.hqPath` in `src/lib/site.ts`; change it to rotate). It is excluded from the sitemap and marked noindex. **Add a real password** once on GoDaddy: cPanel → Files → Directory Privacy → the `hq-725-x9k4m` folder → "Password protect this directory" → add a user. cPanel writes the auth lines into that folder's `.htaccess`. The newsletter send itself is protected separately by the send secret (see `newsletter-engine/README.md`).
 
 ## Files and links to fill in
 
+- **Photos:** drop JPGs into `public/photos/`, then run `npm run photos` once. It writes WebP copies (full size and 800px) plus `manifest.json` so pages can serve the small, fast version and never shift while loading. Commit the generated files with the JPG.
 - **Newsletters:** drop Scuttlebutt PDFs into `public/newsletters/` (see its README for the filename rule). The Scuttlebutt page builds its archive from that folder.
 - **Downloads:** `public/downloads/` holds the membership application, welcome packet, uniform deck, scholarship application, and golf flyer (see its README). A link only appears once the file exists.
 - **Payment and social links** (all optional env vars, or paste into `src/lib/site.ts`): `NEXT_PUBLIC_PAYPAL_DUES_URL` (Pay Dues button), `NEXT_PUBLIC_GOLF_REGISTER_URL` and `NEXT_PUBLIC_GOLF_SPONSOR_URL` (golf PayPal checkouts), `NEXT_PUBLIC_INSTAGRAM_URL`, `NEXT_PUBLIC_DONATE_URL`, `NEXT_PUBLIC_FORMSPREE_ENDPOINT`, `NEXT_PUBLIC_NEWSLETTER_ENDPOINT`.
