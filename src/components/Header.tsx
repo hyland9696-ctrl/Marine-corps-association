@@ -74,7 +74,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="group flex items-center gap-3">
+        <Link href="/" className="group flex shrink-0 items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold bg-navy-light transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
             <span className="font-display text-lg font-bold text-gold">725</span>
           </span>
@@ -82,7 +82,7 @@ export default function Header() {
             <span className="font-display text-base font-semibold tracking-wide uppercase sm:hidden">
               {site.shortName}
             </span>
-            <span className="hidden font-display text-lg font-semibold tracking-wide uppercase sm:block">
+            <span className="hidden whitespace-nowrap font-display text-lg font-semibold tracking-wide uppercase sm:block xl:text-base 2xl:text-lg">
               {site.name}
             </span>
             <span className="text-xs text-gold-light sm:hidden">St. Charles County MCL</span>
@@ -90,7 +90,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav ref={navRef} className="hidden items-center gap-5 xl:flex" aria-label="Main">
+        <nav ref={navRef} className="hidden items-center gap-4 xl:flex" aria-label="Main">
           {site.nav.map((item) => {
             if (isGroup(item)) {
               const groupActive = item.children.some((c) => c.href === pathname);

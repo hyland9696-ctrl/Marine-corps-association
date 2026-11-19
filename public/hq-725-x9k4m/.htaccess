@@ -1,0 +1,16 @@
+# Password-protects the private HQ page at the server, on top of the unlisted
+# URL. Set it up once in GoDaddy cPanel → Files → Directory Privacy: pick this
+# folder, tick "Password protect this directory", add a user. cPanel writes
+# the AuthUserFile line below with the correct absolute path for your account.
+# Until then this file is inert (the Require line alone does nothing).
+#
+# AuthType Basic
+# AuthName "Detachment 725 HQ"
+# AuthUserFile /home/USERNAME/.htpasswds/public_html/hq-725-x9k4m/passwd
+# Require valid-user
+
+# Never cache or index the HQ page.
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-store"
+  Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>

@@ -154,9 +154,32 @@ const groups: { title: string; items: QA[] }[] = [
   },
 ];
 
+// Plain-text answers for search engines (links stripped).
+function plain(node: React.ReactNode): string {
+  if (typeof node === "string") return node;
+  if (Array.isArray(node)) return node.map(plain).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return plain((node as { props: { children?: React.ReactNode } }).props.children);
+  }
+  return "";
+}
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: groups.flatMap((g) =>
+    g.items.map((i) => ({
+      "@type": "Question",
+      name: i.q,
+      acceptedAnswer: { "@type": "Answer", text: plain(i.a).replace(/\s+/g, " ").trim() },
+    }))
+  ),
+};
+
 export default function FaqPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <section className="bg-chevrons bg-navy py-16 text-cream sm:py-24">
         <Container>
           <SectionHeading

@@ -26,6 +26,24 @@ var SHEET_COMPOSE = 'Compose';
 var SHEET_LOG = 'Sent Log';
 var FROM_NAME = 'St. Charles County Detachment 725';
 
+// The HQ page's "Send" buttons call this script directly. They must present
+// the SEND_SECRET stored in Script Properties (menu: Newsletter → Set send
+// secret). Anyone without it can only subscribe/unsubscribe.
+function getSendSecret_() {
+  return PropertiesService.getScriptProperties().getProperty('SEND_SECRET') || '';
+}
+function setSendSecret() {
+  var ui = SpreadsheetApp.getUi();
+  var resp = ui.prompt('Send secret',
+    'Type a long passphrase. You will enter the same one on the website HQ page. Leave blank to keep the current one.',
+    ui.ButtonSet.OK_CANCEL);
+  if (resp.getSelectedButton() !== ui.Button.OK) return;
+  var v = String(resp.getResponseText() || '').trim();
+  if (v.length < 12) { ui.alert('Use at least 12 characters.'); return; }
+  PropertiesService.getScriptProperties().setProperty('SEND_SECRET', v);
+  ui.alert('Saved. Enter the same secret on the HQ page.');
+}
+
 // ------------------------------------------------------------------
 // One-time setup: build the tabs
 // ------------------------------------------------------------------
@@ -66,6 +84,7 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('📣 Newsletter')
     .addItem('1. Setup (run once)', 'setup')
+    .addItem('2. Set send secret (for the HQ page)', 'setSendSecret')
     .addItem('Open Photos Folder', 'openPhotosFolder')
     .addSeparator()
     .addItem('Send TEST to me', 'sendTest')
@@ -78,6 +97,14 @@ function onOpen() {
 // ------------------------------------------------------------------
 function doPost(e) {
   try {
+    // JSON requests come from the website's HQ page (send / stats).
+    var raw = e && e.postData && e.postData.contents;
+    var ct = e && e.postData && e.postData.type;
+    if (raw && ct && ct.indexOf('application/json') === -1 && ct.indexOf('text/plain') !== -1) {
+      var req = null;
+      try { req = JSON.parse(raw); } catch (ignore) { req = null; }
+      if (req && req.action) return handleJson_(req);
+    }
     var params = (e && e.parameter) || {};
     // Honeypot: bots fill this hidden field — silently accept and drop.
     if (params._gotcha) return textOut('ok');
@@ -136,35 +163,80 @@ function send_(testOnly) {
   var compose = ss.getSheetByName(SHEET_COMPOSE);
   var subject = String(compose.getRange('B1').getValue() || '').trim();
   var html = String(compose.getRange('B2').getValue() || '').trim();
+  var ui = SpreadsheetApp.getUi();
 
   if (!subject || !html || html.indexOf('Paste the newsletter') === 0) {
-    SpreadsheetApp.getUi().alert('Add a Subject (B1) and the newsletter HTML (B2) on the Compose tab first.');
+    ui.alert('Add a Subject (B1) and the newsletter HTML (B2) on the Compose tab first.');
     return;
   }
-
-  var webAppUrl = ScriptApp.getService().getUrl();
-  var me = Session.getActiveUser().getEmail();
-
-  var recipients;
-  if (testOnly) {
-    recipients = [{ email: me, name: 'Test', token: 'test' }];
-  } else {
-    var ui = SpreadsheetApp.getUi();
-    recipients = getSubscribers_(ss);
-    var resp = ui.alert('Send newsletter?',
-      'Subject: ' + subject + '\nThis will email ' + recipients.length + ' subscriber(s) from your Gmail.',
-      ui.ButtonSet.OK_CANCEL);
+  if (!testOnly) {
+    var n = getSubscribers_(ss).length;
+    var resp = ui.alert('Send newsletter?', 'Subject: ' + subject + '\nThis will email ' + n + ' subscriber(s) from your Gmail.', ui.ButtonSet.OK_CANCEL);
     if (resp !== ui.Button.OK) return;
   }
+  var result = deliver_(ss, subject, html, buildPhotos_(), testOnly ? 'test' : 'all');
+  ui.alert('Done. Sent ' + result.sent + ' of ' + result.recipients + '.' + (result.note ? '\n' + result.note : ''));
+}
 
-  // Embed "Recent Events" photos from the Drive folder as inline (CID) images
-  // so they display reliably in every email client.
-  var photos = buildPhotos_();
+// ------------------------------------------------------------------
+// JSON API used by the website HQ page
+//   {action:'stats', secret}                         → counts + last send
+//   {action:'send',  secret, mode:'test'|'all',
+//    subject, html, photos:[{name,type,data(base64)}]} → sends
+// ------------------------------------------------------------------
+function handleJson_(req) {
+  var secret = getSendSecret_();
+  if (!secret || String(req.secret || '') !== secret) {
+    return jsonOut({ ok: false, error: 'bad_secret' });
+  }
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (req.action === 'stats') {
+    var subs = getSubscribers_(ss).length;
+    var log = ss.getSheetByName(SHEET_LOG);
+    var last = null;
+    if (log && log.getLastRow() > 1) {
+      var row = log.getRange(log.getLastRow(), 1, 1, 6).getValues()[0];
+      last = { at: row[0], subject: row[1], recipients: row[2], sent: row[3], errors: row[4] };
+    }
+    return jsonOut({ ok: true, subscribers: subs, quota: MailApp.getRemainingDailyQuota(), last: last });
+  }
+  if (req.action === 'send') {
+    var subject = String(req.subject || '').trim();
+    var html = String(req.html || '');
+    if (!subject || !html) return jsonOut({ ok: false, error: 'missing_content' });
+    var photos = photosFromPayload_(req.photos || []);
+    if (!photos.html) photos = buildPhotos_();
+    var result = deliver_(ss, subject, html, photos, req.mode === 'all' ? 'all' : 'test', req.testTo);
+    return jsonOut(result);
+  }
+  return jsonOut({ ok: false, error: 'unknown_action' });
+}
+
+// Photos posted from the HQ page (already resized in the browser).
+function photosFromPayload_(list) {
+  var imgs = [];
+  for (var i = 0; i < Math.min(list.length, 8); i++) {
+    var p = list[i];
+    if (!p || !p.data || !/^image\//.test(String(p.type || ''))) continue;
+    try {
+      imgs.push(Utilities.newBlob(Utilities.base64Decode(p.data), p.type, p.name || ('photo' + i + '.jpg')));
+    } catch (ignore) {}
+  }
+  if (!imgs.length) return { html: '', inlineImages: {} };
+  return photosHtml_(imgs.map(function (b) { return { getBlob: function () { return b; } }; }));
+}
+
+// Shared delivery used by the sheet menu and the HQ page.
+function deliver_(ss, subject, html, photos, mode, testTo) {
+  var webAppUrl = ScriptApp.getService().getUrl();
+  var me = Session.getEffectiveUser().getEmail();
+  var recipients = mode === 'all'
+    ? getSubscribers_(ss)
+    : [{ email: isEmail(String(testTo || '')) ? String(testTo) : me, name: 'Test', token: 'test' }];
+
   html = html.replace(/{{\s*PHOTOS\s*}}/g, photos.html);
-
   var quota = MailApp.getRemainingDailyQuota();
   var sent = 0, errors = 0, note = '';
-
   for (var i = 0; i < recipients.length; i++) {
     if (sent >= quota) { note = 'Stopped at Gmail daily limit (' + quota + '). Run again tomorrow to finish.'; break; }
     var r = recipients[i];
@@ -174,20 +246,19 @@ function send_(testOnly) {
       .replace(/{{\s*NAME\s*}}/g, r.name || 'Marine');
     try {
       GmailApp.sendEmail(r.email, subject, 'Please view this email in an HTML-capable client.', {
-        htmlBody: body,
-        name: FROM_NAME,
-        inlineImages: photos.inlineImages,
+        htmlBody: body, name: FROM_NAME, inlineImages: photos.inlineImages,
       });
       sent++;
-    } catch (err) {
-      errors++;
-    }
+    } catch (err) { errors++; }
   }
-
   ss.getSheetByName(SHEET_LOG).appendRow([
-    new Date(), subject + (testOnly ? ' (TEST)' : ''), recipients.length, sent, errors, note,
+    new Date(), subject + (mode === 'test' ? ' (TEST)' : ''), recipients.length, sent, errors, note,
   ]);
-  SpreadsheetApp.getUi().alert('Done. Sent ' + sent + ' of ' + recipients.length + '.' + (note ? '\n' + note : ''));
+  return { ok: true, mode: mode, recipients: recipients.length, sent: sent, errors: errors, note: note };
+}
+
+function jsonOut(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
 // ------------------------------------------------------------------
@@ -238,8 +309,11 @@ function buildPhotos_() {
   }
   if (!imgs.length) return { html: '', inlineImages: {} };
   imgs.sort(function (a, b) { return a.getName() < b.getName() ? -1 : 1; });
-  imgs = imgs.slice(0, 8);
+  return photosHtml_(imgs.slice(0, 8));
+}
 
+// Builds the "Recent Events" grid + inline image map from blob holders.
+function photosHtml_(imgs) {
   var inline = {}, cells = '';
   for (var i = 0; i < imgs.length; i += 2) {
     var row = '';

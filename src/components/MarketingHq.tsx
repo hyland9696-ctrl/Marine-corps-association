@@ -325,13 +325,13 @@ export default function MarketingHq() {
                 </a>
               </li>
               <li>
-                <strong>Each month:</strong> write the newsletter below, click{" "}
-                <em>Copy subject</em> and <em>Copy email HTML</em>.
+                <strong>Once per browser:</strong> in the sheet, <strong>📣 Newsletter → Set send
+                secret</strong>, then enter the same secret in the Send box below.
               </li>
               <li>
-                <strong>Send:</strong> paste both into your sheet&rsquo;s <em>Compose</em> tab and
-                use its <strong>📣 Newsletter → Send</strong> menu. Everyone gets it with a working
-                unsubscribe link.
+                <strong>Each month:</strong> the issue and meeting dates are pre-filled. Write the
+                column, add events and photos, <em>Send test to me</em>, then{" "}
+                <em>Send to all subscribers</em>. Everyone gets it with a working unsubscribe link.
               </li>
             </ol>
             <p className="mt-3 text-cream/55">

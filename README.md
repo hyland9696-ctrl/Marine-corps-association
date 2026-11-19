@@ -17,6 +17,10 @@ npm run dev
 
 Site copy and contact details live in `src/lib/site.ts`. Update that file to change meeting times, contacts, or program descriptions site-wide.
 
+## Private HQ page
+
+The officers' page lives at an unlisted URL (`site.hqPath` in `src/lib/site.ts`; change it to rotate). It is excluded from the sitemap and marked noindex. **Add a real password** once on GoDaddy: cPanel → Files → Directory Privacy → the `hq-725-x9k4m` folder → "Password protect this directory" → add a user. cPanel writes the auth lines into that folder's `.htaccess`. The newsletter send itself is protected separately by the send secret (see `public/newsletter/README.md`).
+
 ## Files and links to fill in
 
 - **Newsletters:** drop Scuttlebutt PDFs into `public/newsletters/` (see its README for the filename rule). The Scuttlebutt page builds its archive from that folder.

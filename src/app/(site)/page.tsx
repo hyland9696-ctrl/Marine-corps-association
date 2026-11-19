@@ -249,6 +249,11 @@ export default function HomePage() {
               <h3 className="mt-3 font-display text-3xl font-bold uppercase tracking-wide">
                 All you need is your DD-214
               </h3>
+              <p className="mt-2 text-sm text-gold-light">
+                <Link href="/just-got-out" className="underline underline-offset-4">
+                  Just got out? Start here.
+                </Link>
+              </p>
               <p className="mt-3 text-cream/85">
                 Bring your signed application, {site.dues.annual}, and proof of honorable service
                 to your first meeting. Community supporters are welcome as Associate members.

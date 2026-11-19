@@ -147,8 +147,9 @@ export const site = {
       ],
     },
     { href: "/gallery", label: "Gallery" },
+    { href: "/just-got-out", label: "Just Got Out?" },
     { href: "/get-involved", label: "Join" },
-    { href: "/support", label: "Support Us" },
+    { href: "/support", label: "Support" },
     { href: "/contact", label: "Contact" },
   ] as NavEntry[],
 };

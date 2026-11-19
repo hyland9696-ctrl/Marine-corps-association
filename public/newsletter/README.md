@@ -41,23 +41,25 @@ There are two one-time setups, then a simple monthly routine.
 
 ## Sending a newsletter (monthly routine)
 
-1. Open the site's **Marketing HQ → Newsletter Composer**. Fill in the
-   subject, intro, and a few highlights. Watch the live preview.
-2. (Optional) **Add event photos:** drop this month's pictures into your Google
-   Drive **"Scuttlebutt Photos"** folder — the send engine embeds them in a
-   "Recent Events" grid at the bottom of the newsletter automatically. (Menu:
-   **📣 Newsletter → Open Photos Folder** for the link.) You can also drop them
-   into the composer's photo box to preview the layout first.
-3. Click **Copy subject** and **Copy email HTML**.
-4. In your Google Sheet's **Compose** tab: paste the subject into **B1** and
-   the HTML into **B2**.
-5. Use the **📣 Newsletter** menu → **Send TEST to me** first. Check your inbox.
-6. Happy? **📣 Newsletter → Send to ALL subscribers.** Confirm the count.
+Everything happens on the website's private **HQ page → Newsletter Composer**:
 
-Every email automatically includes a working **unsubscribe** link, and each
-send is recorded on the **Sent Log** tab. Photos are embedded directly in the
-email (not linked), so they display even when a recipient's app blocks external
-images.
+1. The issue name and next-meeting dates are already filled in. Write the
+   editor column, add this month's events, paste in the "Good of the League."
+2. Drop up to 8 event photos into the photo box. They are resized in the
+   browser and embedded in the email.
+3. Enter the **send secret** (one time per browser; see setup step 3 below).
+4. **Send test to me.** Check your inbox.
+5. **Send to all subscribers.** Confirm the count. Done. The send is recorded
+   on the sheet's **Sent Log** tab and the draft is cleared.
+
+Your draft autosaves in the browser as you type, so you can come back to it.
+The old copy-and-paste route still works under "Manual fallback."
+
+### Setup step 3: the send secret
+In the Google Sheet: **📣 Newsletter → 2. Set send secret**. Type a long
+passphrase. Then on the HQ page, enter the same passphrase once in the
+"Send secret" box. Nobody can trigger a send without it, even if they find
+the HQ page.
 
 ---
 
@@ -73,5 +75,5 @@ images.
   senders flagged (and it's against the law under CAN-SPAM).
 - **Unsubscribes are automatic.** When someone clicks unsubscribe, their row is
   marked and they're skipped on future sends. Don't email them manually after.
-- **Text messages (SMS)** are a separate paid add-on (Twilio) — ask me when
-  you're ready and I'll wire it in.
+- **Text messages (SMS)** are a separate paid add-on (Twilio); say the word
+  when you're ready.

@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { site } from "@/lib/site";
+import { nextMeeting } from "@/lib/meeting";
 import {
   buildNewsletterHtml,
   photosSectionHtml,
@@ -25,27 +27,183 @@ function useCopy(): [boolean, (t: string) => void] {
   ];
 }
 
+const DRAFT_KEY = "mcl725-scuttlebutt-draft";
+const SECRET_KEY = "mcl725-send-secret";
+
+type Photo = { name: string; type: string; data: string }; // data = base64, no prefix
+
+const fmtDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+const fmtIssue = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
+
+// Second Monday of the next month that is still ahead (staff meeting).
+function nextStaffMeeting(now = new Date()): Date {
+  const second = (y: number, m: number) => {
+    const d = new Date(y, m, 1, 19, 0, 0, 0);
+    d.setDate(1 + ((1 - d.getDay() + 7) % 7) + 7);
+    return d;
+  };
+  let d = second(now.getFullYear(), now.getMonth());
+  if (d.getTime() < now.getTime()) d = second(now.getFullYear(), now.getMonth() + 1);
+  return d;
+}
+
+// Shrink a photo in the browser so the email stays light (max 1200px, JPEG).
+function resizeImage(file: File): Promise<Photo> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const max = 1200;
+      const scale = Math.min(1, max / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+      resolve({ name: file.name.replace(/\.[^.]+$/, "") + ".jpg", type: "image/jpeg", data: dataUrl.split(",")[1] });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not read " + file.name));
+    };
+    img.src = url;
+  });
+}
+
+function readDraft(): { subject?: string; c?: NewsletterContent } | null {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    return raw ? (JSON.parse(raw) as { subject?: string; c?: NewsletterContent }) : null;
+  } catch {
+    return null;
+  }
+}
+
+type SendState =
+  | { kind: "idle" }
+  | { kind: "sending"; mode: "test" | "all" }
+  | { kind: "done"; text: string }
+  | { kind: "error"; text: string };
+
 const labelCls = "block font-display text-xs font-semibold uppercase tracking-wide text-gold";
 const inputCls =
   "mt-1 w-full rounded-sm border border-cream/15 bg-navy px-3 py-2 text-sm text-cream placeholder-cream/30 outline-none focus:border-gold/60";
 
 export default function NewsletterComposer() {
-  const [subject, setSubject] = useState("The Scuttlebutt — September 2026");
-  const [c, setC] = useState<NewsletterContent>(newsletterDefaults);
-  const [photos, setPhotos] = useState<string[]>([]);
+  const now = useMemo(() => new Date(), []);
+  const prefilled = useMemo<NewsletterContent>(
+    () => ({
+      ...newsletterDefaults,
+      issue: fmtIssue.format(now),
+      nextDetachmentMeeting: fmtDate.format(nextMeeting(now)),
+      nextStaffMeeting: fmtDate.format(nextStaffMeeting(now)),
+    }),
+    [now]
+  );
+  // Drafts live in this browser only; read them once, lazily, so the first
+  // render already has them (no setState-in-effect, no flash of defaults).
+  const [subject, setSubject] = useState(() => readDraft()?.subject ?? `The Scuttlebutt — ${fmtIssue.format(new Date())}`);
+  const [c, setC] = useState<NewsletterContent>(() => readDraft()?.c ?? prefilled);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [secret, setSecret] = useState(() => {
+    try {
+      return localStorage.getItem(SECRET_KEY) ?? "";
+    } catch {
+      return "";
+    }
+  });
+  const [testTo, setTestTo] = useState("");
+  const [send, setSend] = useState<SendState>({ kind: "idle" });
+  const [stats, setStats] = useState<{ subscribers: number; quota: number; last: { at: string; subject: string; sent: number } | null } | null>(null);
   const [copiedSubject, copySubject] = useCopy();
   const [copiedHtml, copyHtml] = useCopy();
+  const endpoint = site.newsletterEndpoint;
 
-  function addPhotos(files: FileList | null) {
-    if (!files) return;
-    Array.from(files)
-      .slice(0, 8)
-      .forEach((file) => {
-        if (!file.type.startsWith("image/")) return;
-        const reader = new FileReader();
-        reader.onload = () => setPhotos((prev) => [...prev, String(reader.result)]);
-        reader.readAsDataURL(file);
+  // Autosave the draft (not the photos) as you type.
+  useEffect(() => {
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ subject, c }));
+    } catch {
+      /* ignore */
+    }
+  }, [subject, c]);
+
+  useEffect(() => {
+    try {
+      if (secret) localStorage.setItem(SECRET_KEY, secret);
+      else localStorage.removeItem(SECRET_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, [secret]);
+
+  async function callEngine(body: Record<string, unknown>) {
+    // text/plain keeps this a "simple" request, which Apps Script answers
+    // without a CORS preflight.
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ ...body, secret }),
+      redirect: "follow",
+    });
+    return (await res.json()) as Record<string, unknown>;
+  }
+
+  async function loadStats() {
+    if (!endpoint || !secret) return;
+    try {
+      const r = await callEngine({ action: "stats" });
+      if (r.ok) setStats(r as unknown as typeof stats);
+      else setStats(null);
+    } catch {
+      setStats(null);
+    }
+  }
+
+  async function doSend(mode: "test" | "all") {
+    if (!endpoint) {
+      setSend({ kind: "error", text: "The send engine isn't connected yet (newsletterEndpoint is empty)." });
+      return;
+    }
+    if (!secret) {
+      setSend({ kind: "error", text: "Enter the send secret first (set it in the Google Sheet menu)." });
+      return;
+    }
+    if (mode === "all") {
+      const n = stats?.subscribers ?? "all";
+      if (!window.confirm(`Send "${subject}" to ${n} subscribers now? This cannot be undone.`)) return;
+    }
+    setSend({ kind: "sending", mode });
+    try {
+      const r = await callEngine({ action: "send", mode, subject, html: rawHtml, photos, testTo });
+      if (!r.ok) {
+        setSend({ kind: "error", text: r.error === "bad_secret" ? "Send secret didn't match." : `Send failed (${String(r.error)}).` });
+        return;
+      }
+      const note = r.note ? ` ${String(r.note)}` : "";
+      setSend({
+        kind: "done",
+        text: mode === "test" ? `Test sent to ${testTo || "your Gmail"}. Check your inbox.` : `Sent to ${r.sent} of ${r.recipients} subscribers.${note}`,
       });
+      if (mode === "all") {
+        try {
+          localStorage.removeItem(DRAFT_KEY);
+        } catch {
+          /* ignore */
+        }
+      }
+      loadStats();
+    } catch {
+      setSend({ kind: "error", text: "Couldn't reach the send engine. Check the Web App URL and that it's deployed to Anyone." });
+    }
+  }
+
+  async function addPhotos(files: FileList | null) {
+    if (!files) return;
+    const picked = Array.from(files).filter((f) => f.type.startsWith("image/")).slice(0, 8 - photos.length);
+    const resized = await Promise.all(picked.map((f) => resizeImage(f).catch(() => null)));
+    setPhotos((prev) => [...prev, ...resized.filter((p): p is Photo => p !== null)]);
   }
 
   const set = <K extends keyof NewsletterContent>(key: K, val: NewsletterContent[K]) =>
@@ -54,15 +212,11 @@ export default function NewsletterComposer() {
   const setEvent = (i: number, patch: Partial<EventItem>) =>
     setC((prev) => ({ ...prev, events: prev.events.map((e, j) => (j === i ? { ...e, ...patch } : e)) }));
 
-  const rawHtml = useMemo(() => buildNewsletterHtml(c), [c]);
-  const previewHtml = useMemo(
-    () =>
-      rawHtml
-        .replace("{{PHOTOS}}", photosSectionHtml(photos))
-        .replace(/{{\s*UNSUBSCRIBE\s*}}/g, "#")
-        .replace(/{{\s*NAME\s*}}/g, "Marine"),
-    [rawHtml, photos]
-  );
+  const rawHtml = buildNewsletterHtml(c);
+  const previewHtml = rawHtml
+    .replace("{{PHOTOS}}", photosSectionHtml(photos.map((p) => `data:${p.type};base64,${p.data}`)))
+    .replace(/{{\s*UNSUBSCRIBE\s*}}/g, "#")
+    .replace(/{{\s*NAME\s*}}/g, "Marine");
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -166,7 +320,7 @@ export default function NewsletterComposer() {
                 {photos.map((src, i) => (
                   <div key={i} className="relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt={`Preview photo ${i + 1}`} className="h-16 w-16 rounded-sm object-cover" />
+                    <img src={`data:${src.type};base64,${src.data}`} alt={`Photo ${i + 1}`} className="h-16 w-16 rounded-sm object-cover" />
                     <button
                       type="button"
                       onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
@@ -180,40 +334,124 @@ export default function NewsletterComposer() {
               </div>
             )}
             <p className="mt-2 text-xs text-cream/70">
-              These are a <strong>preview</strong> so you can see the layout. To actually send them,
-              drop the same photos into your Google Drive{" "}
-              <strong>&ldquo;Scuttlebutt Photos&rdquo;</strong> folder — the send engine embeds them
-              automatically. (Menu: <strong>📣 Newsletter → Open Photos Folder</strong>.)
+              Up to 8 photos. They&rsquo;re resized here and embedded in the email when you hit
+              send, so they show even where images are blocked.
             </p>
           </div>
         </div>
 
         <p className="text-xs text-cream/70">
-          The officer roster, meeting schedule, and dues table are built in automatically — you only
-          edit the parts that change each month.
+          Issue, next-meeting dates, the officer roster, meeting schedule, and dues table are
+          filled in automatically. Your draft autosaves in this browser.
         </p>
 
-        <div className="flex flex-wrap gap-3 pt-1">
-          <button
-            type="button"
-            onClick={() => copySubject(subject)}
-            className="rounded-sm border border-gold/50 px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-gold transition hover:bg-gold hover:text-navy"
-          >
-            {copiedSubject ? "Copied ✓" : "Copy subject"}
-          </button>
-          <button
-            type="button"
-            onClick={() => copyHtml(rawHtml)}
-            className="rounded-sm bg-scarlet px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-cream transition hover:bg-scarlet-light"
-          >
-            {copiedHtml ? "Copied ✓" : "Copy email HTML"}
-          </button>
+        {/* Send */}
+        <div className="rounded-sm border border-gold/40 bg-navy p-4">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-gold">
+            Send
+          </p>
+          {!endpoint ? (
+            <p className="mt-2 text-sm text-cream/80">
+              The send engine isn&rsquo;t connected yet. Deploy the Google Apps Script (see
+              newsletter/README) and paste its Web App URL into <code>newsletterEndpoint</code>.
+              Until then, use the copy buttons below and the sheet&rsquo;s menu.
+            </p>
+          ) : (
+            <>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="nlc-secret" className={labelCls}>Send secret</label>
+                  <input
+                    id="nlc-secret"
+                    type="password"
+                    className={inputCls}
+                    value={secret}
+                    onChange={(e) => setSecret(e.target.value)}
+                    onBlur={loadStats}
+                    placeholder="From the sheet menu: Set send secret"
+                    autoComplete="off"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="nlc-testto" className={labelCls}>Send test to</label>
+                  <input
+                    id="nlc-testto"
+                    type="email"
+                    className={inputCls}
+                    value={testTo}
+                    onChange={(e) => setTestTo(e.target.value)}
+                    placeholder="Blank = the Gmail that runs the script"
+                  />
+                </div>
+              </div>
+              {stats && (
+                <p className="mt-3 text-xs text-cream/70">
+                  <strong className="text-cream">{stats.subscribers}</strong> subscribers · Gmail can send{" "}
+                  <strong className="text-cream">{stats.quota}</strong> more today
+                  {stats.last ? ` · last send: ${stats.last.subject} (${stats.last.sent} delivered)` : ""}
+                </p>
+              )}
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  disabled={send.kind === "sending"}
+                  onClick={() => doSend("test")}
+                  className="rounded-sm border border-gold/50 px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-gold transition hover:bg-gold hover:text-navy disabled:opacity-50"
+                >
+                  {send.kind === "sending" && send.mode === "test" ? "Sending…" : "Send test to me"}
+                </button>
+                <button
+                  type="button"
+                  disabled={send.kind === "sending"}
+                  onClick={() => doSend("all")}
+                  className="rounded-sm bg-scarlet px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-cream transition hover:bg-scarlet-light disabled:opacity-50"
+                >
+                  {send.kind === "sending" && send.mode === "all" ? "Sending…" : "Send to all subscribers"}
+                </button>
+              </div>
+              {send.kind === "done" && <p className="mt-3 text-sm text-gold-light">{send.text}</p>}
+              {send.kind === "error" && <p className="mt-3 text-sm text-scarlet-light">{send.text}</p>}
+            </>
+          )}
         </div>
-        <p className="text-xs text-cream/70">
-          Paste the subject into cell <strong>B1</strong> and the HTML into <strong>B2</strong> on
-          your Google Sheet&rsquo;s <em>Compose</em> tab, then use its
-          <strong> 📣 Newsletter → Send</strong> menu.
-        </p>
+
+        <details className="text-xs text-cream/70">
+          <summary className="cursor-pointer font-display font-semibold uppercase tracking-wide text-gold/80">
+            Manual fallback (copy &amp; paste into the sheet)
+          </summary>
+          <div className="mt-3 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => copySubject(subject)}
+              className="rounded-sm border border-gold/50 px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-gold transition hover:bg-gold hover:text-navy"
+            >
+              {copiedSubject ? "Copied ✓" : "Copy subject"}
+            </button>
+            <button
+              type="button"
+              onClick={() => copyHtml(rawHtml)}
+              className="rounded-sm border border-cream/30 px-4 py-2 font-display text-sm font-semibold uppercase tracking-wide text-cream transition hover:bg-cream hover:text-navy"
+            >
+              {copiedHtml ? "Copied ✓" : "Copy email HTML"}
+            </button>
+          </div>
+          <p className="mt-2">
+            Paste the subject into <strong>B1</strong> and the HTML into <strong>B2</strong> on the
+            sheet&rsquo;s <em>Compose</em> tab, then use <strong>📣 Newsletter → Send</strong>.
+          </p>
+        </details>
+        <button
+          type="button"
+          onClick={() => {
+            setC(prefilled);
+            setSubject(`The Scuttlebutt — ${fmtIssue.format(new Date())}`);
+            setPhotos([]);
+            setSend({ kind: "idle" });
+          }}
+          className="text-xs text-cream/60 underline hover:text-cream"
+        >
+          Start a fresh issue
+        </button>
       </div>
 
       {/* Live preview */}
