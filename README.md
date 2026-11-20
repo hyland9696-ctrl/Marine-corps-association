@@ -33,6 +33,15 @@ The officers' page lives at an unlisted URL (`site.hqPath` in `src/lib/site.ts`;
 
 Add upcoming cookouts to `bbqUpcoming` in `src/lib/site.ts` (and move finished ones to `bbqRecent`). While `bbqUpcoming` is empty, the BBQ page tells visitors where dates get posted.
 
+## Meeting minutes (HQ page, "Meeting Minutes" tab)
+
+Record the meeting on a phone (or upload a Voice Memo afterward) and the HQ page transcribes it and drafts full minutes in Marine Corps League order, plus a recap for the Scuttlebutt. Two API keys are needed once per browser, entered on that tab and stored only in that browser:
+
+- **Deepgram** (speech to text): free account at console.deepgram.com, create an API key. About $0.25 per hour of audio.
+- **Anthropic** (writes the minutes): platform.claude.com, create an API key. About $0.10 to $0.30 per meeting.
+
+The audio is sent to Deepgram and the transcript to Anthropic for processing; nothing is stored on the website. Announce at the start of each meeting that it is being recorded. The last set of minutes is kept in the browser until the next run.
+
 ## Deploying
 
 The site is a static export (`output: "export"`) hosted on GoDaddy. Run `npm run build`, then upload the contents of the `out/` folder (it includes `.htaccess` with the security headers). The build needs no network access.

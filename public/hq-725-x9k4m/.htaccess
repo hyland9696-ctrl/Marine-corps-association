@@ -13,4 +13,6 @@
 <IfModule mod_headers.c>
   Header set Cache-Control "no-store"
   Header set X-Robots-Tag "noindex, nofollow"
+  # The meeting recorder needs the microphone on this page only.
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(self)"
 </IfModule>

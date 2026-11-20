@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { site } from "@/lib/site";
-import { nextMeeting } from "@/lib/meeting";
+import { nextMeeting, nextStaffMeeting } from "@/lib/meeting";
 import {
   buildNewsletterHtml,
   photosSectionHtml,
@@ -34,18 +34,6 @@ type Photo = { name: string; type: string; data: string }; // data = base64, no 
 
 const fmtDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
 const fmtIssue = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
-
-// Second Monday of the next month that is still ahead (staff meeting).
-function nextStaffMeeting(now = new Date()): Date {
-  const second = (y: number, m: number) => {
-    const d = new Date(y, m, 1, 19, 0, 0, 0);
-    d.setDate(1 + ((1 - d.getDay() + 7) % 7) + 7);
-    return d;
-  };
-  let d = second(now.getFullYear(), now.getMonth());
-  if (d.getTime() < now.getTime()) d = second(now.getFullYear(), now.getMonth() + 1);
-  return d;
-}
 
 // Shrink a photo in the browser so the email stays light (max 1200px, JPEG).
 function resizeImage(file: File): Promise<Photo> {

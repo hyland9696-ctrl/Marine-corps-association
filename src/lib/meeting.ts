@@ -16,3 +16,15 @@ export function nextMeeting(now: Date = new Date()): Date {
   if (d.getTime() < now.getTime()) d = thirdThursday(now.getFullYear(), now.getMonth() + 1);
   return d;
 }
+
+/** Next staff meeting: second Monday of the month, 7:00 PM. */
+export function nextStaffMeeting(now: Date = new Date()): Date {
+  const second = (y: number, mo: number) => {
+    const d = new Date(y, mo, 1, 19, 0, 0, 0);
+    d.setDate(1 + ((1 - d.getDay() + 7) % 7) + 7);
+    return d;
+  };
+  let d = second(now.getFullYear(), now.getMonth());
+  if (d.getTime() < now.getTime()) d = second(now.getFullYear(), now.getMonth() + 1);
+  return d;
+}
